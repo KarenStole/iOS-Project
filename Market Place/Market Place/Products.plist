@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Natural juices</key>
+	<array>
+		<array>
+			<string>Pear Juice</string>
+			<integer>10</integer>
+			<string>PearJuice.png</string>
+		</array>
+		<array>
+			<string>Apple Juice</string>
+			<integer>6</integer>
+			<string>AppleJuice.png</string>
+		</array>
+		<array>
+			<string>Orange Juice</string>
+			<integer>5</integer>
+			<string>OrangeJuice.png</string>
+		</array>
+		<array>
+			<string>Carrot Juice</string>
+			<integer>8</integer>
+			<string>CarrotJuice.png</string>
+		</array>
+	</array>
+	<key>Nuts</key>
+	<array>
+		<array>
+			<string>Walnuts</string>
+			<integer>50</integer>
+			<string>Walnuts.png</string>
+		</array>
+		<array>
+			<string>Almonds</string>
+			<integer>40</integer>
+			<string>Almonds.png</string>
+		</array>
+		<array>
+			<string>Peanuts</string>
+			<integer>20</integer>
+			<string>Peanuts.png</string>
+		</array>
+	</array>
+	<key>Veggies</key>
+	<array>
+		<array>
+			<string>Avocado</string>
+			<integer>12</integer>
+			<string>Avocado.png</string>
+		</array>
+		<array>
+			<string>Cucumber</string>
+			<integer>3</integer>
+			<string>Cucumber.png</string>
+		</array>
+	</array>
+	<key>Fruits</key>
+	<array>
+		<array>
+			<string>Watermelon</string>
+			<integer>8</integer>
+			<string>Watermelon.png</string>
+		</array>
+		<array>
+			<string>Kiwi</string>
+			<integer>10</integer>
+			<string>kiwi.png</string>
+		</array>
+		<array>
+			<string>Grapefruit</string>
+			<integer>5</integer>
+			<string>Grapefruit.png</string>
+		</array>
+	</array>
+</dict>
+</plist>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C6CDB3F226AAD7E00F074D5 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C6CDB3E226AAD7E00F074D5 /* Products.plist */; };
 		2CC209602269655D003F30A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2095F2269655D003F30A2 /* AppDelegate.swift */; };
 		2CC209622269655D003F30A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC209612269655D003F30A2 /* ViewController.swift */; };
 		2CC209652269655D003F30A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CC209632269655D003F30A2 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C6CDB3E226AAD7E00F074D5 /* Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		2CC2095C2269655D003F30A2 /* Market Place.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Market Place.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC2095F2269655D003F30A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CC209612269655D003F30A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				2CC2096622696560003F30A2 /* Assets.xcassets */,
 				2CC2096822696560003F30A2 /* LaunchScreen.storyboard */,
 				2CC2096B22696560003F30A2 /* Info.plist */,
+				2C6CDB3E226AAD7E00F074D5 /* Products.plist */,
 			);
 			path = "Market Place";
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C6CDB3F226AAD7E00F074D5 /* Products.plist in Resources */,
 				2CC2096A22696560003F30A2 /* LaunchScreen.storyboard in Resources */,
 				2CC2096722696560003F30A2 /* Assets.xcassets in Resources */,
 				2CC209652269655D003F30A2 /* Main.storyboard in Resources */,
