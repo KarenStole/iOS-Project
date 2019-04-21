@@ -87,38 +87,27 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jlD-o9-9xi">
                                 <rect key="frame" x="5" y="60" width="310" height="136"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Banner-2.png" translatesAutoresizingMaskIntoConstraints="NO" id="l9I-9A-1vs">
-                                        <rect key="frame" x="0.0" y="0.0" width="310" height="136"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Texto" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRr-7p-vKN">
-                                        <rect key="frame" x="10" y="98.5" width="60" height="29.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQ5-Fy-eNS">
+                                        <rect key="frame" x="8" y="107" width="34" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Promocion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MD2-6Y-mMW">
-                                        <rect key="frame" x="10" y="73" width="42" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="my8-Cc-ayl">
+                                        <rect key="frame" x="8" y="78" width="29" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="MD2-6Y-mMW" firstAttribute="width" secondItem="vRr-7p-vKN" secondAttribute="width" multiplier="0.7" id="4bu-6f-JBI"/>
-                                    <constraint firstItem="vRr-7p-vKN" firstAttribute="leading" secondItem="jlD-o9-9xi" secondAttribute="leading" constant="10" id="53u-wx-mpv"/>
-                                    <constraint firstItem="MD2-6Y-mMW" firstAttribute="height" secondItem="vRr-7p-vKN" secondAttribute="height" multiplier="0.7" id="6IB-TU-sT2"/>
-                                    <constraint firstItem="l9I-9A-1vs" firstAttribute="width" secondItem="jlD-o9-9xi" secondAttribute="width" id="NNE-ZJ-Adv"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vRr-7p-vKN" secondAttribute="trailing" constant="20" symbolic="YES" id="VEw-6j-vJX"/>
-                                    <constraint firstAttribute="bottom" secondItem="l9I-9A-1vs" secondAttribute="bottom" id="VUu-7f-yP0"/>
-                                    <constraint firstItem="MD2-6Y-mMW" firstAttribute="leading" secondItem="jlD-o9-9xi" secondAttribute="leading" constant="10" id="b0c-H2-K36"/>
-                                    <constraint firstItem="l9I-9A-1vs" firstAttribute="leading" secondItem="jlD-o9-9xi" secondAttribute="leading" id="bdP-Y2-V8Y"/>
-                                    <constraint firstAttribute="trailing" secondItem="l9I-9A-1vs" secondAttribute="trailing" id="cgH-NF-dcv"/>
-                                    <constraint firstItem="l9I-9A-1vs" firstAttribute="top" secondItem="jlD-o9-9xi" secondAttribute="top" id="kE5-Di-FXy"/>
-                                    <constraint firstItem="MD2-6Y-mMW" firstAttribute="width" secondItem="jlD-o9-9xi" secondAttribute="height" multiplier="21:68" id="l7Y-Qm-ys2"/>
-                                    <constraint firstItem="vRr-7p-vKN" firstAttribute="top" secondItem="MD2-6Y-mMW" secondAttribute="bottom" constant="5" id="qku-fH-R8r"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MD2-6Y-mMW" secondAttribute="trailing" constant="20" symbolic="YES" id="r0b-Bt-ivg"/>
-                                    <constraint firstItem="l9I-9A-1vs" firstAttribute="height" secondItem="jlD-o9-9xi" secondAttribute="height" id="tM0-6S-sgk"/>
-                                    <constraint firstItem="vRr-7p-vKN" firstAttribute="bottom" secondItem="jlD-o9-9xi" secondAttribute="bottomMargin" id="y36-bQ-epH"/>
+                                    <constraint firstAttribute="trailing" secondItem="kQ5-Fy-eNS" secondAttribute="trailing" constant="260" id="LCG-4Y-ITd"/>
+                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="leading" secondItem="jlD-o9-9xi" secondAttribute="leadingMargin" id="TKL-rU-c9E"/>
+                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="leading" secondItem="my8-Cc-ayl" secondAttribute="leading" id="UnW-ul-7Qo"/>
+                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="top" secondItem="my8-Cc-ayl" secondAttribute="bottom" constant="8" symbolic="YES" id="VXq-hG-iDu"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="my8-Cc-ayl" secondAttribute="trailing" constant="20" symbolic="YES" id="ZZS-wl-loX"/>
+                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="bottom" secondItem="jlD-o9-9xi" secondAttribute="bottomMargin" id="emC-3Q-Od3"/>
+                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="top" secondItem="jlD-o9-9xi" secondAttribute="top" constant="107" id="hy1-1M-HpD"/>
                                 </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPL-Xv-9Ac">
@@ -156,6 +145,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="scrollView" destination="jlD-o9-9xi" id="Dn2-y7-Gto"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -163,7 +155,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Banner-2.png" width="335" height="160"/>
         <image name="icon-cart.png" width="24" height="21"/>
     </resources>
 </document>

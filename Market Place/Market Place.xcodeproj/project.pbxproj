@@ -15,6 +15,8 @@
 		2CC2096A22696560003F30A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CC2096822696560003F30A2 /* LaunchScreen.storyboard */; };
 		2CC2097522696560003F30A2 /* Market_PlaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2097422696560003F30A2 /* Market_PlaceTests.swift */; };
 		2CC2098022696560003F30A2 /* Market_PlaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2097F22696560003F30A2 /* Market_PlaceUITests.swift */; };
+		2CE61101226D1019008A5056 /* Promotions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CE61100226D1019008A5056 /* Promotions.plist */; };
+		2CE61103226D16D9008A5056 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE61102226D16D9008A5056 /* ModelController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		2CC2097B22696560003F30A2 /* Market PlaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Market PlaceUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC2097F22696560003F30A2 /* Market_PlaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Market_PlaceUITests.swift; sourceTree = "<group>"; };
 		2CC2098122696560003F30A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CE61100226D1019008A5056 /* Promotions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Promotions.plist; sourceTree = "<group>"; };
+		2CE61102226D16D9008A5056 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,11 +105,13 @@
 			children = (
 				2CC2095F2269655D003F30A2 /* AppDelegate.swift */,
 				2CC209612269655D003F30A2 /* ViewController.swift */,
+				2CE61102226D16D9008A5056 /* ModelController.swift */,
 				2CC209632269655D003F30A2 /* Main.storyboard */,
 				2CC2096622696560003F30A2 /* Assets.xcassets */,
 				2CC2096822696560003F30A2 /* LaunchScreen.storyboard */,
 				2CC2096B22696560003F30A2 /* Info.plist */,
 				2C6CDB3E226AAD7E00F074D5 /* Products.plist */,
+				2CE61100226D1019008A5056 /* Promotions.plist */,
 			);
 			path = "Market Place";
 			sourceTree = "<group>";
@@ -234,6 +240,7 @@
 			files = (
 				2C6CDB3F226AAD7E00F074D5 /* Products.plist in Resources */,
 				2CC2096A22696560003F30A2 /* LaunchScreen.storyboard in Resources */,
+				2CE61101226D1019008A5056 /* Promotions.plist in Resources */,
 				2CC2096722696560003F30A2 /* Assets.xcassets in Resources */,
 				2CC209652269655D003F30A2 /* Main.storyboard in Resources */,
 			);
@@ -260,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CE61103226D16D9008A5056 /* ModelController.swift in Sources */,
 				2CC209622269655D003F30A2 /* ViewController.swift in Sources */,
 				2CC209602269655D003F30A2 /* AppDelegate.swift in Sources */,
 			);

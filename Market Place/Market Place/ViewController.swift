@@ -10,11 +10,36 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var imageViewOnCell: UIImageView!
+    let modelController = ModelController()
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        showPromotionImagesOnScrollView()
     }
 
 
+}
+
+extension ViewController{
+    
+    func getPromotionImages() -> [UIImage] {
+        return modelController.getPromotionsImages()
+    }
+    
+    func showPromotionImagesOnScrollView() {
+        
+        let images = getPromotionImages()
+        for i in 0..<images.count {
+            let imageView = UIImageView()
+            let x = scrollView.frame.size.width * CGFloat(i)
+            imageView.frame = CGRect(x: x, y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = images[i]
+            
+            scrollView.contentSize.width = scrollView.frame.size.width * CGFloat(i + 1)
+            scrollView.addSubview(imageView)
+        }
+    }
 }
 

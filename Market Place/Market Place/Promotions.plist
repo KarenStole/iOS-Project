@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Promotion 1</key>
+	<array>
+		<string>Banana&apos;s day</string>
+		<string>Banana 30% off</string>
+		<string>Banner-1.png</string>
+	</array>
+	<key>Promotion 2</key>
+	<array>
+		<string>2x1 on cucumbers</string>
+		<string>Get the second cucumber for free</string>
+		<string>Banner-3.png</string>
+	</array>
+	<key>Promotion 3</key>
+	<array>
+		<string>Natural juices</string>
+		<string>Natural juices section is now available</string>
+		<string>Banner-2.png</string>
+	</array>
+	<key>Promorion 4</key>
+	<array>
+		<string>More kiwi for life</string>
+		<string>Happy kiwi&apos;s day</string>
+		<string>Banner-4.png</string>
+	</array>
+</dict>
+</plist>
