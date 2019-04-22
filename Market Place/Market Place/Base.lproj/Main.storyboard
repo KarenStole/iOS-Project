@@ -84,31 +84,11 @@
                                 <color key="pageIndicatorTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <color key="currentPageIndicatorTintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jlD-o9-9xi">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jlD-o9-9xi">
                                 <rect key="frame" x="5" y="60" width="310" height="136"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQ5-Fy-eNS">
-                                        <rect key="frame" x="8" y="107" width="34" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="my8-Cc-ayl">
-                                        <rect key="frame" x="8" y="78" width="29" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="kQ5-Fy-eNS" secondAttribute="trailing" constant="260" id="LCG-4Y-ITd"/>
-                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="leading" secondItem="jlD-o9-9xi" secondAttribute="leadingMargin" id="TKL-rU-c9E"/>
-                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="leading" secondItem="my8-Cc-ayl" secondAttribute="leading" id="UnW-ul-7Qo"/>
-                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="top" secondItem="my8-Cc-ayl" secondAttribute="bottom" constant="8" symbolic="YES" id="VXq-hG-iDu"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="my8-Cc-ayl" secondAttribute="trailing" constant="20" symbolic="YES" id="ZZS-wl-loX"/>
-                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="bottom" secondItem="jlD-o9-9xi" secondAttribute="bottomMargin" id="emC-3Q-Od3"/>
-                                    <constraint firstItem="kQ5-Fy-eNS" firstAttribute="top" secondItem="jlD-o9-9xi" secondAttribute="top" constant="107" id="hy1-1M-HpD"/>
-                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="WCb-mp-XlP"/>
+                                </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPL-Xv-9Ac">
                                 <rect key="frame" x="285" y="20" width="30" height="30"/>
@@ -146,6 +126,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="pageControl" destination="FBf-fc-rNv" id="REu-ma-Fvt"/>
                         <outlet property="scrollView" destination="jlD-o9-9xi" id="Dn2-y7-Gto"/>
                     </connections>
                 </viewController>

@@ -11,17 +11,20 @@ import UIKit
 class ViewController: UIViewController {
 
     let modelController = ModelController()
+    
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showPromotionImagesOnScrollView()
+        pageControl.numberOfPages = getPromotionImages().count
     }
 
 
 }
 
-extension ViewController{
+extension ViewController : UIScrollViewDelegate{
     
     func getPromotionImages() -> [UIImage] {
         return modelController.getPromotionsImages()
@@ -32,14 +35,19 @@ extension ViewController{
         let images = getPromotionImages()
         for i in 0..<images.count {
             let imageView = UIImageView()
-            let x = scrollView.frame.size.width * CGFloat(i)
-            imageView.frame = CGRect(x: x, y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
+            let x = self.view.frame.size.width * CGFloat(i)
+            imageView.frame = CGRect(x: x, y: 0, width: self.view.frame.width, height: scrollView.frame.height)
             imageView.contentMode = .scaleAspectFit
             imageView.image = images[i]
-            
-            scrollView.contentSize.width = scrollView.frame.size.width * CGFloat(i + 1)
             scrollView.addSubview(imageView)
         }
+        
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(images.count), height: scrollView.frame.size.height )
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageNumber = scrollView.contentOffset.x / scrollView.frame.size.width
+        pageControl.currentPage = Int(pageNumber)
     }
 }
 
