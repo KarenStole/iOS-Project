@@ -14,6 +14,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBAction func getListOfProducts(_ sender: Any) {
+        print (modelController.getProductsFromFile())
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
