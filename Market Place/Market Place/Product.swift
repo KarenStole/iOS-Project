@@ -9,12 +9,15 @@
 import Foundation
 import UIKit
 
-class Product  {
+class Product: Hashable {
+    private var name : String
+    private var price : Int
+    private var category : String
+    private var image : UIImage
     
-    var name : String
-    var price : Int
-    var category : String
-    var image : UIImage
+    var hashValue: Int {
+        return name.hashValue
+    }
     
     init(name : String, price : Int, category : String, image : UIImage) {
         self.name = name
@@ -48,5 +51,10 @@ class Product  {
     func setProductImage(image : UIImage) {
         self.image = image
     }
+    
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        return lhs.name == rhs.name
+    }
+
     
 }

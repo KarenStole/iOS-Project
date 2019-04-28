@@ -59,4 +59,24 @@ class ModelController {
         }
         return productArray
     }
+    
+    func  getProductForCategory(caregoryIndex : Int) -> [Product] {
+        let category = getProductCategoryFromFile()[caregoryIndex]
+        var productForEachCategory : [Product] = []
+        
+        for product in 0..<getProductsFromFile().count{
+            if  getProductsFromFile()[product].getProductCategory() == category {
+                productForEachCategory.append(getProductsFromFile()[product])
+            }
+        }
+        return productForEachCategory
+    }
+    
+    func getProductsName(products : [Product]) -> [String]{
+        var productsNames : [String] = []
+        for product in products{
+            productsNames.append(product.getProductName())
+        }
+        return productsNames
+    }
 }
