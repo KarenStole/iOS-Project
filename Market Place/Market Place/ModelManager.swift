@@ -9,8 +9,13 @@
 import Foundation
 import UIKit
 
-class ModelController {
+class ModelManager {
     
+    static let sharedModelManager = ModelManager()
+    
+    private init(){}
+    
+    //#############    FUNCTIONS TO MANAGE PROMOTIONS ###############################################
     //Function that get the images's references from Promotions.plist and parse it into an array of UIImage
     func getPromotionsImages() -> [UIImage] {
         var imagesArray : [UIImage] = []
@@ -29,6 +34,7 @@ class ModelController {
         return imagesArray
     }
     
+    //#############    FUNCTIONS TO MANAGE PRODUCTS #################################################
     func getProductCategoryFromFile() -> [String] {
         var categoryArray : [String] = []
         
@@ -72,11 +78,44 @@ class ModelController {
         return productForEachCategory
     }
     
+    func getListOfAllProductsForCategory() -> [[Product]]{
+        var returnArray = [[Product]]()
+        for categoryIndex in 0..<self.getProductCategoryFromFile().count{
+            returnArray.append(self.getProductForCategory(caregoryIndex: categoryIndex))
+        }
+        return returnArray
+    }
+    
     func getProductsName(products : [Product]) -> [String]{
         var productsNames : [String] = []
         for product in products{
             productsNames.append(product.getProductName())
         }
         return productsNames
+    }
+    
+    
+    //#############    FUNCTIONS TO MANAGE THE CART #################################################
+    static func initCart() -> Cart {
+        var dictionary = [Product : Int]()
+        for product in sharedModelManager.getProductsFromFile(){
+            dictionary[product] = 0
+        }
+        return Cart(dictionary: dictionary)
+    }
+    
+    func addProductIntoTheCart(product : Product, quantity : Int, cart : Cart) {
+            cart.cart.updateValue(quantity, forKey: product)
+    }
+    
+    func isCartEmpty(cart : Cart) -> Bool {
+        var isEmpty = false
+        for productInCart in cart.cart{
+            if productInCart.value != 0 {
+                isEmpty = true
+                break
+            }
+        }
+        return isEmpty
     }
 }

@@ -21,6 +21,7 @@ class TableViewCell: UITableViewCell {
     
     var showAddButton = false
     var showPlusMinButton = true
+    var numberOfProducts = 1
     var tableView = UITableView()
     
     override func layoutSubviews() {
@@ -30,7 +31,7 @@ class TableViewCell: UITableViewCell {
         addButton.layer.cornerRadius = 10
         addButton.clipsToBounds = true
         addButton.layer.borderWidth = 1
-        numberOfProductsLabel.text = "1"
+        numberOfProductsLabel.text = "\(numberOfProducts)"
         self.addButton.isHidden = self.showAddButton
         self.plusButton.isHidden = self.showPlusMinButton
         self.minusButton.isHidden = self.showPlusMinButton
