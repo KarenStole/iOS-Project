@@ -328,6 +328,7 @@
                         <viewLayoutGuide key="safeArea" id="dSs-pw-5X6"/>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="OH1-En-x3d" id="DjR-Sa-EEO"/>
                         <outlet property="totalPriceLabel" destination="xdz-ch-iqS" id="ERz-9o-qhp"/>
                     </connections>
                 </viewController>

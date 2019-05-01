@@ -10,14 +10,17 @@ import Foundation
 import UIKit
 
 class ModelManager {
-    
+
     static let sharedModelManager = ModelManager()
+    var cart = Cart.initCart()
+    var emptyCart = true
+
     
     private init(){}
     
     //#############    FUNCTIONS TO MANAGE PROMOTIONS ###############################################
     //Function that get the images's references from Promotions.plist and parse it into an array of UIImage
-    func getPromotionsImages() -> [UIImage] {
+    static func getPromotionsImages() -> [UIImage] {
         var imagesArray : [UIImage] = []
         
         //Getting the file's content
@@ -35,7 +38,7 @@ class ModelManager {
     }
     
     //#############    FUNCTIONS TO MANAGE PRODUCTS #################################################
-    func getProductCategoryFromFile() -> [String] {
+    static func getProductCategoryFromFile() -> [String] {
         var categoryArray : [String] = []
         
         let path = Bundle.main.path(forResource: "Products", ofType: "plist")
@@ -44,7 +47,7 @@ class ModelManager {
         return categoryArray
     }
     
-    func getProductsFromFile() -> [Product] {
+    static func getProductsFromFile() -> [Product] {
         var productArray : [Product] = []
         
         //Getting file's content
@@ -66,7 +69,7 @@ class ModelManager {
         return productArray
     }
     
-    func  getProductForCategory(caregoryIndex : Int) -> [Product] {
+    static func  getProductForCategory(caregoryIndex : Int) -> [Product] {
         let category = getProductCategoryFromFile()[caregoryIndex]
         var productForEachCategory : [Product] = []
         
@@ -78,7 +81,7 @@ class ModelManager {
         return productForEachCategory
     }
     
-    func getListOfAllProductsForCategory() -> [[Product]]{
+    static func getListOfAllProductsForCategory() -> [[Product]]{
         var returnArray = [[Product]]()
         for categoryIndex in 0..<self.getProductCategoryFromFile().count{
             returnArray.append(self.getProductForCategory(caregoryIndex: categoryIndex))
@@ -86,7 +89,7 @@ class ModelManager {
         return returnArray
     }
     
-    func getProductsName(products : [Product]) -> [String]{
+    static func getProductsName(products : [Product]) -> [String]{
         var productsNames : [String] = []
         for product in products{
             productsNames.append(product.getProductName())
@@ -96,16 +99,10 @@ class ModelManager {
     
     
     //#############    FUNCTIONS TO MANAGE THE CART #################################################
-    static func initCart() -> Cart {
-        var dictionary = [Product : Int]()
-        for product in sharedModelManager.getProductsFromFile(){
-            dictionary[product] = 0
-        }
-        return Cart(dictionary: dictionary)
-    }
     
     func addProductIntoTheCart(product : Product, quantity : Int, cart : Cart) {
-            cart.cart.updateValue(quantity, forKey: product)
+        cart.cart.updateValue(quantity, forKey: product)
+        self.emptyCart = false
     }
     
     func isCartEmpty(cart : Cart) -> Bool {

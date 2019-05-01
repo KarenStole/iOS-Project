@@ -40,5 +40,12 @@ class Cart  {
         }
         return sum
     }
+    static func initCart() -> Cart {
+        var dictionary = [Product : Int]()
+        for product in ModelManager.getProductsFromFile(){
+            dictionary[product] = 0
+        }
+        return Cart(dictionary: dictionary)
+    }
     
 }

@@ -8,15 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, InformationBackProtocol {
+    
     let modelController = ModelManager.sharedModelManager
     var categories : [String] = []
     var products : [Product] = []
     var searchProduct = [String]()
     var searchActive : Bool = false
     var buttonAddStatusFormCells: [[Bool]] = []
-    var cart = ModelManager.initCart()
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -24,72 +23,89 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cartButton: UIButton!
     @IBAction func getListOfProducts(_ sender: Any) {
-        print (modelController.getProductsFromFile())
+        print (ModelManager.getProductsFromFile())
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        categories = modelController.getProductCategoryFromFile()
-        products = modelController.getProductsFromFile()
+        categories = ModelManager.getProductCategoryFromFile()
+        products = ModelManager.getProductsFromFile()
         showPromotionImagesOnScrollView()
         for category in 0..<categories.count{
-            self.buttonAddStatusFormCells.append(Array(repeating: false, count: modelController.getProductForCategory(caregoryIndex: category).count))
+            self.buttonAddStatusFormCells.append(Array(repeating: false, count: ModelManager.getProductForCategory(caregoryIndex: category).count))
         }
         pageControl.numberOfPages = getPromotionImages().count
-        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.cart)
+        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.modelController.cart)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if (self.modelController.emptyCart){
+            self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.modelController.cart)
+            var newStatusArray = [[Bool]]()
+            for category in 0..<categories.count{
+                newStatusArray.append(Array(repeating: false, count: ModelManager.getProductForCategory(caregoryIndex: category).count))
+            }
+            self.buttonAddStatusFormCells = newStatusArray
+        }
+        self.tableView.reloadData()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destVC : ViewControllerCart = segue.destination as! ViewControllerCart
         destVC.modelController = self.modelController
-        destVC.cart = self.cart
+        destVC.cart = self.modelController.cart
         
+    }
+    func setResultOfBusinessLogic(valueSent: Cart) {
+        self.modelController.cart = valueSent
+        self.tableView.reloadData()
+        print("Llego y en el carrito hay: \(self.modelController.cart.cart.count)")
     }
     
     @IBAction func showHideButton(_ sender: Any) {
         let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
         let indexPath = self.tableView.indexPathForRow(at:buttonPosition)
         if let indexPath = indexPath {
-            let productOfIndexDefined = self.modelController.getListOfAllProductsForCategory()[indexPath.section][indexPath.row]
-            if let quantityOfProduct = self.cart.cart[productOfIndexDefined]{
-                self.modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct+1, cart: self.cart)
+            let productOfIndexDefined = ModelManager.getListOfAllProductsForCategory()[indexPath.section][indexPath.row]
+            if let quantityOfProduct = self.modelController.cart.cart[productOfIndexDefined]{
+                self.modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct+1, cart: self.modelController.cart)
                 buttonAddStatusFormCells[(indexPath.section)][(indexPath.row)] = true
             }
+            self.tableView.reloadRows(at: [indexPath], with: .none)
         }
-        self.tableView.reloadData()
-        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.cart)
+        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.modelController.cart)
     }
     
     @IBAction func addProductToCart(_ sender: Any) {
         let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
         let indexPath = self.tableView.indexPathForRow(at:buttonPosition)
         if let indexPath = indexPath {
-            let productOfIndexDefined = self.modelController.getListOfAllProductsForCategory()[indexPath.section][indexPath.row]
-            if let quantityOfProduct = self.cart.cart[productOfIndexDefined]{
-                self.modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct+1, cart: self.cart)
+            let productOfIndexDefined = ModelManager.getListOfAllProductsForCategory()[indexPath.section][indexPath.row]
+            if let quantityOfProduct = self.modelController.cart.cart[productOfIndexDefined]{
+                self.modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct+1, cart: self.modelController.cart)
                 buttonAddStatusFormCells[(indexPath.section)][(indexPath.row)] = true
             }
+            self.tableView.reloadRows(at: [indexPath], with: .none)
         }
-        self.tableView.reloadData()
-        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.cart)
+        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.modelController.cart)
     }
     @IBAction func showHideMinPlusButton(_ sender: Any) {
         let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
         let indexPath = self.tableView.indexPathForRow(at:buttonPosition)
         if let indexPath = indexPath {
-            let productOfIndexDefined = self.modelController.getListOfAllProductsForCategory()[indexPath.section][indexPath.row]
-            if let quantityOfProduct = self.cart.cart[productOfIndexDefined]{
-                if(self.cart.cart[productOfIndexDefined] != 0){
-                    self.modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct-1, cart: self.cart)
+            let productOfIndexDefined = ModelManager.getListOfAllProductsForCategory()[indexPath.section][indexPath.row]
+            if let quantityOfProduct = self.modelController.cart.cart[productOfIndexDefined]{
+                if(self.modelController.cart.cart[productOfIndexDefined] != 0){
+                    self.modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct-1, cart: self.modelController.cart)
                 }
-                if(self.cart.cart[productOfIndexDefined] == 0){
+                if(self.modelController.cart.cart[productOfIndexDefined] == 0){
                     buttonAddStatusFormCells[(indexPath.section)][(indexPath.row)] = false
                 }
             }
+            self.tableView.reloadRows(at: [indexPath], with: .none)
             
         }
-        self.tableView.reloadData()
-        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.cart)
+        self.cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: self.modelController.cart)
     }
     
     @IBAction func goToCheckout(_ sender: Any) {
@@ -105,8 +121,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         if(self.searchActive){
             var count = 0
-            let products = modelController.getProductForCategory(caregoryIndex: section)
-            let productsNames = modelController.getProductsName(products: products)
+            let products = ModelManager.getProductForCategory(caregoryIndex: section)
+            let productsNames = ModelManager.getProductsName(products: products)
             for index in 0..<searchProduct.count{
                 if(productsNames.contains(searchProduct[index])){
                         count+=1
@@ -117,7 +133,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             }
         
         else{
-            return modelController.getProductForCategory(caregoryIndex: section).count
+            return ModelManager.getProductForCategory(caregoryIndex: section).count
         }
     }
     
@@ -129,7 +145,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellTableView", for: indexPath) as! TableViewCell
         cell.tableView = self.tableView
-        let product = modelController.getProductForCategory(caregoryIndex: indexPath.section)
+        let product = ModelManager.getProductForCategory(caregoryIndex: indexPath.section)
         if(searchActive){
             for prod in  product{
                 for prodNameSearched in self.searchProduct{
@@ -141,7 +157,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     cell.productPictureImageView.image = prod.getProductImage()
                     cell.showAddButton = self.buttonAddStatusFormCells[indexPath.section][indexPath.row]
                     cell.showPlusMinButton = !self.buttonAddStatusFormCells[indexPath.section][indexPath.row]
-                    cell.numberOfProducts = self.cart.cart[prod]!
+                    cell.numberOfProducts = self.modelController.cart.cart[prod]!
                 }
             }
             }
@@ -152,7 +168,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             cell.productPictureImageView.image = product[indexPath.row].getProductImage()
             cell.showAddButton = self.buttonAddStatusFormCells[indexPath.section][indexPath.row]
             cell.showPlusMinButton = !self.buttonAddStatusFormCells[indexPath.section][indexPath.row]
-            cell.numberOfProducts = self.cart.cart[product[indexPath.row]]!
+            cell.numberOfProducts = self.modelController.cart.cart[product[indexPath.row]]!
         }
 
         return cell
@@ -175,7 +191,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController : UIScrollViewDelegate{
     
     func getPromotionImages() -> [UIImage] {
-        return modelController.getPromotionsImages()
+        return ModelManager.getPromotionsImages()
     }
     
     func showPromotionImagesOnScrollView() {
@@ -202,7 +218,7 @@ extension ViewController : UIScrollViewDelegate{
 extension ViewController : UISearchBarDelegate{
     
    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    searchProduct = modelController.getProductsName(products: self.products).filter({ $0.prefix(searchText.count) == searchText })
+    searchProduct = ModelManager.getProductsName(products: self.products).filter({ $0.prefix(searchText.count) == searchText })
     if(searchProduct.count != self.products.count){
         searchActive = true}
     else{
