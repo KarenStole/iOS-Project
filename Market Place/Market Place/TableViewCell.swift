@@ -18,19 +18,22 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var minusButton: UIButton!
     @IBOutlet weak var numberOfProductsLabel: UILabel!
+    var product: Product?
     
     var showAddButton = false
     var showPlusMinButton = true
     var numberOfProducts = 1
     var tableView = UITableView()
     
+    //Setting the style of the items in the cell
     override func layoutSubviews() {
         super.layoutSubviews()
         productPictureImageView.layer.cornerRadius = productPictureImageView.frame.width / 2.0
         productPictureImageView.layer.masksToBounds = true
         addButton.layer.cornerRadius = 10
         addButton.clipsToBounds = true
-        addButton.layer.borderWidth = 1
+        addButton.layer.borderWidth = 2
+        addButton.layer.borderColor = UIColor.purple.cgColor
         numberOfProductsLabel.text = "\(numberOfProducts)"
         self.addButton.isHidden = self.showAddButton
         self.plusButton.isHidden = self.showPlusMinButton

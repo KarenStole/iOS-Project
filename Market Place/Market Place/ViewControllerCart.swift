@@ -8,57 +8,49 @@
 
 import UIKit
 
-protocol InformationBackProtocol {
-    func setResultOfBusinessLogic(valueSent: Cart)
-}
 
 class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var modelController = ModelManager.sharedModelManager
-    var cart = Cart.initCart()
-    var delegate : InformationBackProtocol?
     var typeValue = Int()
 
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var checkOutButon: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.totalPriceLabel.text = "$\(cart.getTotal())"
-
-        // Do any additional setup after loading the view.
+        self.totalPriceLabel.text = "$\(self.modelController.cart.getTotal())"
+        checkOutButon.layer.cornerRadius = 20
     }
     
-    
+    //######### One section in pickerView ################
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    //######## Ten elements in the pickerView ############
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 10
     }
     
+    //######## Element 1 to 10 in the pickerViewr #######
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return "\(row+1)"
     }
     
+    //######## Getting the selected picker value #######
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.typeValue = row+1
     }
     
-
-    @IBAction func backToBuy(_ sender: Any) {
-        self.modelController.cart = self.cart
-        dismiss(animated: true, completion: nil)
-    }
-    
+    //######## Checkout's button action, empty the cart ando go back to the previous view controller ###########################
     @IBAction func checkOut(_ sender: Any) {
         let alert = UIAlertController(title: "Checkout", message: "Your purchase has been successful", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
             UIAlertAction in
-            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popToRootViewController(animated: true)
             self.modelController.cart = Cart.initCart()
-            self.modelController.emptyCart = true
         }
         
         alert.addAction(okAction)
@@ -67,34 +59,36 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
 }
 extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    //######## Set the numbers of items in the CollectionView ############################################
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cart.cantOfProducts()
+        return self.modelController.cart.cantOfProducts()
     }
     
+    //####### Set the collectionViews's cell settings (image and labels) for only thoes prodoucts in the cart which quantity is > 0 ####
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
-        let products = self.cart.cart.filter { (arg0) -> Bool in
+        
+        // Getting the items form the cart that value is > 0
+        let products = self.modelController.cart.cart.filter { (arg0) -> Bool in
             let (_, value) = arg0
             return value != 0
         }
         let product = Array(products.keys)[indexPath.row]
         
-        if (self.cart.cart[product] != 0){
+        if (self.modelController.cart.cart[product] != 0){
             cell.product = product
             cell.productImageView.image = product.getProductImage()
             cell.productPriceLebel.text = "$\(product.getProductPrice())"
             cell.productNameLabel.text = product.getProductName()
-            cell.productUnitLabel.text = "\(self.cart.cart[product] ?? 0) unit"
-     /*       let UITapRecognizer = UITapGestureRecognizer()
-            UITapRecognizer.addTarget(self, action: #selector(tappedImage))
-            cell.productImageView.addGestureRecognizer(UITapRecognizer)
-            cell.productImageView.isUserInteractionEnabled = true*/
+            cell.productUnitLabel.text = "\(self.modelController.cart.cart[product] ?? 0) unit"
             
         }
         
         return cell
     }
     
+    //################# Setting only two colums in the CollectionView #########################################################
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let padding: CGFloat =  50
         let collectionViewSize = collectionView.frame.size.width - padding
@@ -102,6 +96,7 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         return CGSize(width: collectionViewSize/2, height: collectionViewSize/2)
     }
     
+    //##Show an alert with a picker when a item from collectionView is selected and also setting the product's quantity when the alert is closed ##
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = UIViewController()
         vc.preferredContentSize = CGSize(width: 250,height: 300)
@@ -113,10 +108,10 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
             UIAlertAction in
                 let cellCollectionView = self.collectionView.cellForItem(at: indexPath) as! CollectionViewCell
                 if let product = cellCollectionView.product{
-                    self.cart.cart[product] = self.typeValue
+                    self.modelController.cart.cart[product] = self.typeValue
                     self.collectionView.reloadItems(at: [indexPath])
                 }
-            self.totalPriceLabel.text = "$\(self.cart.getTotal())"
+            self.totalPriceLabel.text = "$\(self.modelController.cart.getTotal())"
         }
         let editUnitsAlert = UIAlertController(title: "Change the units", message: "", preferredStyle: UIAlertController.Style.alert)
         editUnitsAlert.setValue(vc, forKey: "contentViewController")

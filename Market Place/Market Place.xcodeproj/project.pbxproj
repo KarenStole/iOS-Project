@@ -12,6 +12,8 @@
 		2C6CDB3F226AAD7E00F074D5 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C6CDB3E226AAD7E00F074D5 /* Products.plist */; };
 		2C72475E226FB381006A77C5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72475D226FB381006A77C5 /* TableViewCell.swift */; };
 		2C7813A42276670A00CD1637 /* ViewControllerCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7813A32276670A00CD1637 /* ViewControllerCart.swift */; };
+		2C9341F3227A5530006172BE /* Promotions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9341F2227A5530006172BE /* Promotions.swift */; };
+		2C9341F5227A5891006172BE /* CollectionViewCellPromotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9341F4227A5891006172BE /* CollectionViewCellPromotion.swift */; };
 		2CC209602269655D003F30A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2095F2269655D003F30A2 /* AppDelegate.swift */; };
 		2CC209622269655D003F30A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC209612269655D003F30A2 /* ViewController.swift */; };
 		2CC209652269655D003F30A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CC209632269655D003F30A2 /* Main.storyboard */; };
@@ -47,6 +49,8 @@
 		2C6CDB3E226AAD7E00F074D5 /* Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		2C72475D226FB381006A77C5 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		2C7813A32276670A00CD1637 /* ViewControllerCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCart.swift; sourceTree = "<group>"; };
+		2C9341F2227A5530006172BE /* Promotions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promotions.swift; sourceTree = "<group>"; };
+		2C9341F4227A5891006172BE /* CollectionViewCellPromotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellPromotion.swift; sourceTree = "<group>"; };
 		2CC2095C2269655D003F30A2 /* Market Place.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Market Place.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC2095F2269655D003F30A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CC209612269655D003F30A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,9 +119,11 @@
 			children = (
 				2CC2095F2269655D003F30A2 /* AppDelegate.swift */,
 				2C7813A32276670A00CD1637 /* ViewControllerCart.swift */,
+				2C9341F2227A5530006172BE /* Promotions.swift */,
 				2C3D5F552276805C00FEC294 /* CollectionViewCell.swift */,
 				2CC209612269655D003F30A2 /* ViewController.swift */,
 				2C72475D226FB381006A77C5 /* TableViewCell.swift */,
+				2C9341F4227A5891006172BE /* CollectionViewCellPromotion.swift */,
 				2C1C74DB22727C2A00D45927 /* Cart.swift */,
 				2CF20AB9226E962600E3953D /* Product.swift */,
 				2CE61102226D16D9008A5056 /* ModelManager.swift */,
@@ -282,9 +288,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C9341F5227A5891006172BE /* CollectionViewCellPromotion.swift in Sources */,
 				2C72475E226FB381006A77C5 /* TableViewCell.swift in Sources */,
 				2C7813A42276670A00CD1637 /* ViewControllerCart.swift in Sources */,
 				2C3D5F562276805C00FEC294 /* CollectionViewCell.swift in Sources */,
+				2C9341F3227A5530006172BE /* Promotions.swift in Sources */,
 				2C1C74DC22727C2B00D45927 /* Cart.swift in Sources */,
 				2CE61103226D16D9008A5056 /* ModelManager.swift in Sources */,
 				2CF20ABA226E962600E3953D /* Product.swift in Sources */,
