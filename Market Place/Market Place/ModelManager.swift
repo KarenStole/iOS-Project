@@ -19,7 +19,6 @@ class ModelManager {
         }
     }
 
-    
     private init(){}
     
     //#############    FUNCTIONS TO MANAGE PROMOTIONS ###############################################
@@ -29,16 +28,24 @@ class ModelManager {
         
         //Getting the file's content
         let path = Bundle.main.path(forResource: "Promotions", ofType: "plist")
-        let contentOfFile = NSDictionary(contentsOfFile: path!)
-        let promotions = contentOfFile as! [String: [String]]
-       let keyPromotions = contentOfFile!.allKeys as! [String]
-        //Getting the image's names (.png) and parse it into UIImage
-        for item in 0..<keyPromotions.count {
-            let promoLabel1 = promotions[keyPromotions[item]]![0]
-            let promoLabel2 = promotions[keyPromotions[item]]![1]
-            let promoImageNameFromFile = UIImage(named: promotions[keyPromotions[item]]![2])
-            let promotion = Promotions(label1: promoLabel1, label2: promoLabel2, image: promoImageNameFromFile!)
-            imagesArray.append(promotion)
+        if let path = path {
+            if let contentOfFile = NSDictionary(contentsOfFile: path){
+            
+                let promotions = contentOfFile as! [String: [String]]
+                let keyPromotions = contentOfFile.allKeys as! [String]
+                //Getting the image's names (.png) and parse it into UIImage
+                for item in 0..<keyPromotions.count {
+                    if let promProperty = promotions[keyPromotions[item]]{
+                        let promoLabel1 = promProperty[0]
+                        let promoLabel2 = promProperty[1]
+                        if let promoImageNameFromFile = UIImage(named: promProperty[2]){
+                            let promotion = Promotions(label1: promoLabel1, label2: promoLabel2, image: promoImageNameFromFile)
+                            imagesArray.append(promotion)
+                            
+                        }
+                    }
+                }
+            }
         }
         
         return imagesArray
@@ -50,9 +57,11 @@ class ModelManager {
     static func getProductCategoryFromFile() -> [String] {
         var categoryArray : [String] = []
         
-        let path = Bundle.main.path(forResource: "Products", ofType: "plist")
-        let contetOfFile = NSDictionary(contentsOfFile: path!)
-        categoryArray = contetOfFile!.allKeys as! [String]
+        if let path = Bundle.main.path(forResource: "Products", ofType: "plist"){
+            if let contetOfFile = NSDictionary(contentsOfFile: path){
+                categoryArray = contetOfFile.allKeys as! [String]
+            }
+        }
         return categoryArray
     }
     
@@ -62,19 +71,22 @@ class ModelManager {
         var productArray : [Product] = []
         
         //Getting file's content
-        let path = Bundle.main.path(forResource: "Products", ofType: "plist")
-        let contentOfFile = NSDictionary(contentsOfFile: path!)
-        let categories = getProductCategoryFromFile()
-        let products = contentOfFile as! [String: [Array<Any>]]
-        
-        for category in 0..<categories.count {
-            let listOfProductsOneCategory = products[categories[category]]
-            for product in 0..<listOfProductsOneCategory!.count{
-                let name = listOfProductsOneCategory![product][0]
-                let price = listOfProductsOneCategory![product][1]
-                let image = UIImage(named: listOfProductsOneCategory![product][2] as! String)
-                let productObject = Product(name: name as! String, price: price as! Int, category: categories[category], image: image!)
-                productArray.append(productObject)
+        if let path = Bundle.main.path(forResource: "Products", ofType: "plist"){
+            if let contentOfFile = NSDictionary(contentsOfFile: path){
+                let categories = getProductCategoryFromFile()
+                let products = contentOfFile as! [String: [Array<Any>]]
+                
+                for category in 0..<categories.count {
+                    if let listOfProductsOneCategory = products[categories[category]]{
+                        for product in 0..<listOfProductsOneCategory.count{
+                            let name = listOfProductsOneCategory[product][0]
+                            let price = listOfProductsOneCategory[product][1]
+                            let image = UIImage(named: listOfProductsOneCategory[product][2] as! String)
+                            let productObject = Product(name: name as! String, price: price as! Int, category: categories[category], image: image!)
+                            productArray.append(productObject)
+                        }
+                    }
+                }
             }
         }
         return productArray

@@ -13,13 +13,12 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var productPictureImageView: UIImageView!
     @IBOutlet weak var productNameLaber: UILabel!
     @IBOutlet weak var productPriceLaber: UILabel!
-    
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var minusButton: UIButton!
     @IBOutlet weak var numberOfProductsLabel: UILabel!
-    var product: Product?
     
+    var product: Product?
     var showAddButton = false
     var showPlusMinButton = true
     var numberOfProducts = 1

@@ -10,13 +10,13 @@ import UIKit
 
 
 class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    var modelController = ModelManager.sharedModelManager
-    var typeValue = Int()
 
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var checkOutButon: UIButton!
+    
+    var modelController = ModelManager.sharedModelManager
+    var typeValue = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +58,7 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         self.present(alert, animated: true)
     }
 }
-extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSource {
+extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     //######## Set the numbers of items in the CollectionView ############################################
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -90,10 +90,11 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
     
     //################# Setting only two colums in the CollectionView #########################################################
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let padding: CGFloat =  50
-        let collectionViewSize = collectionView.frame.size.width - padding
         
-        return CGSize(width: collectionViewSize/2, height: collectionViewSize/2)
+        let padding: CGFloat = 10
+        let collectionCellSize = collectionView.frame.size.width - padding
+        return CGSize(width: collectionCellSize/2, height: collectionCellSize*0.70)
+        
     }
     
     //##Show an alert with a picker when a item from collectionView is selected and also setting the product's quantity when the alert is closed ##
