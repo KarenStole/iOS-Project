@@ -16,7 +16,7 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var checkOutButon: UIButton!
     
     var modelController = ModelManager.sharedModelManager
-    var typeValue = Int()
+    var typeValue = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +105,10 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         pickerView.delegate = self
         pickerView.dataSource = self
         vc.view.addSubview(pickerView)
+        let cellCollectionView = self.collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+        if let product = cellCollectionView.product{
+            pickerView.selectRow(self.modelController.cart.cart[product]!-1, inComponent: 0, animated: true)
+        }
         let doneAction = UIAlertAction(title: "Done", style: UIAlertAction.Style.default) {
             UIAlertAction in
                 let cellCollectionView = self.collectionView.cellForItem(at: indexPath) as! CollectionViewCell
