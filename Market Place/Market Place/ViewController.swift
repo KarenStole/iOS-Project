@@ -36,13 +36,6 @@ class ViewController: UIViewController {
         promotions = ModelManager.getPromotions()
         pageControl.numberOfPages = promotions.count
         initCellButtonStatus()
-        var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        for index in 0..<promotions.count{
-            frame.origin.x = bannerCollectionView.frame.width * CGFloat(index)
-            frame.size = bannerCollectionView.frame.size
-        }
-        bannerCollectionView.contentSize = CGSize(width: (bannerCollectionView.frame.size.width) * CGFloat(promotions.count), height: bannerCollectionView.frame.size.height)
-        
     }
     
     /* Set the the status button from the cells (hidden or not hidden)
