@@ -108,6 +108,7 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         let cellCollectionView = self.collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         if let product = cellCollectionView.product{
             pickerView.selectRow(self.modelController.cart.cart[product]!-1, inComponent: 0, animated: true)
+            typeValue = self.modelController.cart.cart[product]!
         }
         let doneAction = UIAlertAction(title: "Done", style: UIAlertAction.Style.default) {
             UIAlertAction in
