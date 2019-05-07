@@ -37,6 +37,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rek-9W-5fN">
                                 <rect key="frame" x="5" y="390" width="404" height="477"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellTableView" rowHeight="107" id="om6-4F-dtq" customClass="TableViewCell" customModule="Market_Place" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="404" height="107"/>
@@ -122,7 +123,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="RC5-K4-oiz" secondAttribute="trailing" constant="10" id="xbd-gq-6zz"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="bXT-dc-ukv" firstAttribute="centerY" secondItem="om6-4F-dtq" secondAttribute="centerY" id="CfQ-Rw-uns"/>
                                             <constraint firstItem="RC5-K4-oiz" firstAttribute="width" secondItem="om6-4F-dtq" secondAttribute="width" multiplier="0.2" id="Dps-rL-u7H"/>
@@ -148,6 +149,8 @@
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="19o-E3-76W">
                                 <rect key="frame" x="5" y="325" width="404" height="56"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="jEC-Qy-cZv"/>
@@ -238,7 +241,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="bEQ-Fx-IxA">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="ZJ6-lg-QXe">
+                        <barButtonItem key="rightBarButtonItem" style="done" id="ZJ6-lg-QXe">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="iPL-Xv-9Ac">
                                 <rect key="frame" x="364" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
