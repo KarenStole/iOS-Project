@@ -20,7 +20,7 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.totalPriceLabel.text = "$\(self.modelController.cart.getTotal())"
+        totalPriceLabel.text = "$\(modelController.cart.getTotal())"
         checkOutButon.layer.cornerRadius = 20
     }
     
@@ -41,7 +41,7 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     //######## Getting the selected picker value #######
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.typeValue = row+1
+        typeValue = row+1
     }
     
     //######## Checkout's button action, empty the cart ando go back to the previous view controller ###########################
@@ -62,7 +62,7 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
     
     //######## Set the numbers of items in the CollectionView ############################################
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.modelController.cart.cantOfProducts()
+        return modelController.cart.cantOfProducts()
     }
     
     //####### Set the collectionViews's cell settings (image and labels) for only thoes prodoucts in the cart which quantity is > 0 ####
@@ -70,18 +70,18 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
         
         // Getting the items form the cart that value is > 0
-        let products = self.modelController.cart.cart.filter { (arg0) -> Bool in
+        let products = modelController.cart.cart.filter { (arg0) -> Bool in
             let (_, value) = arg0
             return value != 0
         }
         let product = Array(products.keys)[indexPath.row]
         
-        if (self.modelController.cart.cart[product] != 0){
+        if (modelController.cart.cart[product] != 0){
             cell.product = product
             cell.productImageView.image = product.getProductImage()
             cell.productPriceLebel.text = "$\(product.getProductPrice())"
             cell.productNameLabel.text = product.getProductName()
-            cell.productUnitLabel.text = "\(self.modelController.cart.cart[product] ?? 0) unit"
+            cell.productUnitLabel.text = "\(modelController.cart.cart[product] ?? 0) unit"
             
         }
         
@@ -105,14 +105,14 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         pickerView.delegate = self
         pickerView.dataSource = self
         vc.view.addSubview(pickerView)
-        let cellCollectionView = self.collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+        let cellCollectionView = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         if let product = cellCollectionView.product{
-            pickerView.selectRow(self.modelController.cart.cart[product]!-1, inComponent: 0, animated: true)
-            typeValue = self.modelController.cart.cart[product]!
+            pickerView.selectRow(modelController.cart.cart[product]!-1, inComponent: 0, animated: true)
+            typeValue = modelController.cart.cart[product]!
         }
         let doneAction = UIAlertAction(title: "Done", style: UIAlertAction.Style.default) {
             UIAlertAction in
-                let cellCollectionView = self.collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+                let cellCollectionView = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
                 if let product = cellCollectionView.product{
                     self.modelController.cart.cart[product] = self.typeValue
                     self.collectionView.reloadItems(at: [indexPath])
@@ -123,6 +123,6 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         editUnitsAlert.setValue(vc, forKey: "contentViewController")
         editUnitsAlert.addAction(doneAction)
         editUnitsAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(editUnitsAlert, animated: true)
+        present(editUnitsAlert, animated: true)
     }
 }

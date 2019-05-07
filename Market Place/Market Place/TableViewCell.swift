@@ -34,10 +34,10 @@ class TableViewCell: UITableViewCell {
         addButton.layer.borderWidth = 2
         addButton.layer.borderColor = UIColor.purple.cgColor
         numberOfProductsLabel.text = "\(numberOfProducts)"
-        self.addButton.isHidden = self.showAddButton
-        self.plusButton.isHidden = self.showPlusMinButton
-        self.minusButton.isHidden = self.showPlusMinButton
-        self.numberOfProductsLabel.isHidden = self.showPlusMinButton
+        addButton.isHidden = self.showAddButton
+        plusButton.isHidden = self.showPlusMinButton
+        minusButton.isHidden = self.showPlusMinButton
+        numberOfProductsLabel.isHidden = self.showPlusMinButton
         
     }
 }
