@@ -22,7 +22,6 @@ class TableViewCell: UITableViewCell {
     var showAddButton = false
     var showPlusMinButton = true
     var numberOfProducts = 1
-    var tableView = UITableView()
     
     //Setting the style of the items in the cell
     override func layoutSubviews() {

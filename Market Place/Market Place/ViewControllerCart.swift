@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 
 class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -46,16 +47,23 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     //######## Checkout's button action, empty the cart ando go back to the previous view controller ###########################
     @IBAction func checkOut(_ sender: Any) {
-        let alert = UIAlertController(title: "Checkout", message: "Your purchase has been successful", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-            UIAlertAction in
-            self.navigationController?.popToRootViewController(animated: true)
-            self.modelController.cart = Cart.initCart()
-        }
         
-        alert.addAction(okAction)
-        
-        self.present(alert, animated: true)
+        ModelManager.postCheckOut(token: self.modelController.token, cart: self.modelController.cart, completionHandler: { response, error in
+            if let response = response{
+                let alert = UIAlertController(title: "Checkout", message: response, preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    self.navigationController?.popToRootViewController(animated: true)
+                    
+                    self.modelController.cart = Cart.initCart(arrayOfProducts: nil)
+                }
+                
+                alert.addAction(okAction)
+                
+                self.present(alert, animated: true)
+            }
+            
+        })
     }
 }
 extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -78,9 +86,15 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         
         if (modelController.cart.cart[product] != 0){
             cell.product = product
-            cell.productImageView.image = product.getProductImage()
-            cell.productPriceLebel.text = "$\(product.getProductPrice())"
-            cell.productNameLabel.text = product.getProductName()
+            if let image = product.image{
+                cell.productImageView.kf.setImage(with: URL(string: image))
+            }
+            else {
+                cell.productImageView.kf.setImage(with: URL(string: "https://static.thenounproject.com/png/340719-200.png"))
+                
+            }
+            cell.productPriceLebel.text = "$\(product.price ?? 0)"
+            cell.productNameLabel.text = product.name
             cell.productUnitLabel.text = "\(modelController.cart.cart[product] ?? 0) unit"
             
         }

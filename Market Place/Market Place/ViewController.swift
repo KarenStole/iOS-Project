@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ViewController: UIViewController {
     @IBOutlet weak var bannerCollectionView: UICollectionView!
@@ -31,11 +32,23 @@ class ViewController: UIViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        categories = ModelManager.getProductCategoryFromFile()
-        products = ModelManager.getProductsFromFile()
-        promotions = ModelManager.getPromotions()
-        pageControl.numberOfPages = promotions.count
-        initCellButtonStatus()
+        ModelManager.getProductsFromApi(completionHandler: {result, error in
+            if let result = result{
+                    self.products = result
+                self.categories = ModelManager.getProductCategories(listOfProducts: self.products)
+                self.initCellButtonStatus()
+                self.modelController.cart = Cart.initCart(arrayOfProducts: self.products)
+                self.tableView.reloadData()
+                }
+            })
+        ModelManager.getPromotionsFromApi(completionHandler: {result, error in
+            if let result = result{
+                self.promotions = result
+                self.pageControl.numberOfPages = self.promotions.count
+                self.bannerCollectionView.reloadData()
+            }
+        })
+
     }
     
     /* Set the the status button from the cells (hidden or not hidden)
@@ -46,23 +59,24 @@ class ViewController: UIViewController {
         cartButton.isUserInteractionEnabled = modelController.emptyCart
         if(!modelController.emptyCart){
             initCellButtonStatus()
+            modelController.cart = Cart.initCart(arrayOfProducts: self.products)
         }
         tableView.reloadData()
     }
     
     /* Move from the ViewControllerCart if the cart have elements*/
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+  /*  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destVC : ViewControllerCart = segue.destination as! ViewControllerCart
         destVC.modelController = modelController
         
-    }
+    }*/
     
     /* Function that init buttonAddStatusFormCells (array (representing the section) of dictionary(representing the element per section [Product:Bool])) */
     func initCellButtonStatus(){
         buttonAddStatusFormCells.removeAll()
         for category in 0..<categories.count{
             var productInCat = [Product:Bool]()
-            for product in ModelManager.getProductForCategory(caregoryIndex: category){
+            for product in ModelManager.getProductForCategory(caregoryIndex: category, listOfProducts: products){
                 productInCat[product] = false
                 }
             buttonAddStatusFormCells.append(productInCat)
@@ -136,53 +150,77 @@ class ViewController: UIViewController {
     @IBAction func goToCheckout(_ sender: Any) {
         performSegue(withIdentifier: "checkOutView", sender: self)
     }
+
+    @IBAction func goToRecord(_ sender: Any) {
+        performSegue(withIdentifier: "recordView", sender: self)
+    }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int{
-        return categories.count
+        if categories.isEmpty{
+            return 1
+        }
+        else{
+            return categories.count
+        }
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if(searchActive){
-            var count = 0
-            let products = ModelManager.getProductForCategory(caregoryIndex: section)
-            let productsNames = ModelManager.getProductsName(products: products)
-            for index in 0..<searchProduct.count{
-                if(productsNames.contains(searchProduct[index])){
-                        count+=1
+        if !categories.isEmpty{
+            if(searchActive){
+                var count = 0
+                let products = ModelManager.getProductForCategory(caregoryIndex: section, listOfProducts: self.products)
+                let productsNames = ModelManager.getProductsName(products: products)
+                for index in 0..<searchProduct.count{
+                    if(productsNames.contains(searchProduct[index])){
+                            count+=1
                         
+                        }
                     }
+                return count
                 }
-            return count
+            
+            else{
+                return ModelManager.getProductForCategory(caregoryIndex: section, listOfProducts: products).count
             }
-        
+        }
         else{
-            return ModelManager.getProductForCategory(caregoryIndex: section).count
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return categories[section]
+        if categories.isEmpty{
+            return "Loading..."
+        }
+        else{
+            return categories[section].uppercased()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellTableView", for: indexPath) as! TableViewCell
-        cell.tableView = tableView
-        let product = ModelManager.getProductForCategory(caregoryIndex: indexPath.section)
+        let product = ModelManager.getProductForCategory(caregoryIndex: indexPath.section, listOfProducts: products)
         //if im searching
         if(searchActive){
             for prod in  product{
                 for prodNameSearched in searchProduct{
                     //iterate in all products in the market and also the searched names, if each names are equals, show only these in the tableView
-                if(prod.getProductName() == prodNameSearched){
+                if(prod.name == prodNameSearched){
                     if let status = buttonAddStatusFormCells[indexPath.section][prod]{
                         if let quantity = modelController.cart.cart[prod]{
                             print("entro")
                             cell.product = prod
-                            cell.productNameLaber.text = prod.getProductName()
-                            cell.productPriceLaber.text = "$\(prod.getProductPrice())"
-                            cell.productPictureImageView.image = prod.getProductImage()
+                            cell.productNameLaber.text = prod.name
+                            cell.productPriceLaber.text = "$\(prod.price ?? 0)"
+                            if let url = prod.image{
+                                cell.productPictureImageView.kf.setImage(with: URL(string:url))
+                            }
+                            else {
+                                cell.productPictureImageView.kf.setImage(with: URL(string: "https://static.thenounproject.com/png/340719-200.png"))
+                            }
                             cell.showAddButton = status
                             cell.showPlusMinButton = !status
                             cell.numberOfProducts = quantity
@@ -197,9 +235,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             if let status = buttonAddStatusFormCells[indexPath.section][product[indexPath.row]]{
                 if let numOfProduct = modelController.cart.cart[product[indexPath.row]]{
                     cell.product = product[indexPath.row]
-                    cell.productNameLaber.text = product[indexPath.row].getProductName()
-                    cell.productPriceLaber.text = "$\(product[indexPath.row].getProductPrice())"
-                    cell.productPictureImageView.image = product[indexPath.row].getProductImage()
+                    cell.productNameLaber.text = product[indexPath.row].name
+                    cell.productPriceLaber.text = "$\(product[indexPath.row].price ?? 0)"
+                    if let url = product[indexPath.row].image{
+                        cell.productPictureImageView.kf.setImage(with: URL(string:url))
+                    }
+                    else {
+                        cell.productPictureImageView.kf.setImage(with: URL(string: "https://static.thenounproject.com/png/340719-200.png"))
+                    }
+
                     cell.showAddButton = status
                     cell.showPlusMinButton = !status
                     cell.numberOfProducts = numOfProduct
@@ -220,15 +264,27 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 }
 extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return promotions.count
+        if(promotions.isEmpty){
+            return 1
+        }
+        else{
+            return promotions.count
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "promotionCell", for: indexPath) as! CollectionViewCellPromotion
         
-        cell.bannerImaeView.image = promotions[indexPath.row].image
-        cell.textMinLabel.text = promotions[indexPath.row].label1
-        cell.textMaxLabel.text = promotions[indexPath.row].label2
+        if(promotions.isEmpty){
+            cell.textMaxLabel.text = "Loading..."
+        }
+        else{
+            cell.bannerImaeView.kf.setImage(with: URL(string: promotions[indexPath.row].image!))
+            cell.textMinLabel.text = promotions[indexPath.row].label1
+            cell.textMaxLabel.text = promotions[indexPath.row].label2
+        }
+
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

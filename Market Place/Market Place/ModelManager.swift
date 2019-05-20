@@ -8,58 +8,54 @@
 
 import Foundation
 import UIKit
+import Alamofire
+import AlamofireObjectMapper
 
 class ModelManager {
 
     static let sharedModelManager = ModelManager()
-    var cart = Cart.initCart()
+    var cart = Cart.initCart(arrayOfProducts: nil)
     var emptyCart: Bool {
         get {
             return isCartEmpty(cart: cart)
         }
     }
+    static let url = "https://us-central1-ucu-ios-api.cloudfunctions.net"
+    var token: String = ""
 
-    private init(){}
+    private init(){
+        AuthenticationManager.shared.authenticate(onCompletion: {response in
+            self.token = "Bearer \(response.token)"
+        })
+    }
     
     //#############    FUNCTIONS TO MANAGE PROMOTIONS ###############################################
     //Function that get the images's references from Promotions.plist and parse it into an array of UIImage
-    static func getPromotions() -> [Promotions] {
-        var imagesArray : [Promotions] = []
-        
-        //Getting the file's content
-        let path = Bundle.main.path(forResource: "Promotions", ofType: "plist")
-        if let path = path {
-            if let contentOfFile = NSDictionary(contentsOfFile: path){
-            
-                let promotions = contentOfFile as! [String: [String]]
-                let keyPromotions = contentOfFile.allKeys as! [String]
-                //Getting the image's names (.png) and parse it into UIImage
-                for item in 0..<keyPromotions.count {
-                    if let promProperty = promotions[keyPromotions[item]]{
-                        let promoLabel1 = promProperty[0]
-                        let promoLabel2 = promProperty[1]
-                        if let promoImageNameFromFile = UIImage(named: promProperty[2]){
-                            let promotion = Promotions(label1: promoLabel1, label2: promoLabel2, image: promoImageNameFromFile)
-                            imagesArray.append(promotion)
-                            
-                        }
-                    }
-                }
+    static func getPromotionsFromApi( completionHandler: @escaping ( [Promotions]?, Error?) -> Void) {
+        //acordarse de poner el metodo
+        print("\(ModelManager.url)/products")
+        Alamofire.request("\(ModelManager.url)/promoted").validate().responseArray { (  response: DataResponse<[Promotions]>) in
+            switch response.result {
+            case .success:
+                completionHandler(response.value, nil)
+                print("success")
+            case .failure(let error):
+                completionHandler(response.value, error)
+                print("error")
             }
+            
         }
-        
-        return imagesArray
     }
     
     //#############    FUNCTIONS TO MANAGE PRODUCTS #################################################
     
     //Get all the caregories form Products.plist
-    static func getProductCategoryFromFile() -> [String] {
+    static func getProductCategories(listOfProducts :[Product]) -> [String] {
         var categoryArray : [String] = []
         
-        if let path = Bundle.main.path(forResource: "Products", ofType: "plist"){
-            if let contetOfFile = NSDictionary(contentsOfFile: path){
-                categoryArray = contetOfFile.allKeys as! [String]
+        for product in listOfProducts{
+            if(!categoryArray.contains(product.category!)){
+                categoryArray.append(product.category!)
             }
         }
         return categoryArray
@@ -67,49 +63,45 @@ class ModelManager {
     
     
     //Get all the products from Products.plist
-    static func getProductsFromFile() -> [Product] {
-        var productArray : [Product] = []
-        
-        //Getting file's content
-        if let path = Bundle.main.path(forResource: "Products", ofType: "plist"){
-            if let contentOfFile = NSDictionary(contentsOfFile: path){
-                let categories = getProductCategoryFromFile()
-                let products = contentOfFile as! [String: [Array<Any>]]
-                
-                for category in 0..<categories.count {
-                    if let listOfProductsOneCategory = products[categories[category]]{
-                        for product in 0..<listOfProductsOneCategory.count{
-                            let name = listOfProductsOneCategory[product][0]
-                            let price = listOfProductsOneCategory[product][1]
-                            let image = UIImage(named: listOfProductsOneCategory[product][2] as! String)
-                            let productObject = Product(name: name as! String, price: price as! Int, category: categories[category], image: image!)
-                            productArray.append(productObject)
-                        }
-                    }
-                }
+    static func getProductsFromApi( completionHandler: @escaping ( [Product]?, Error?) -> Void) {
+        //acordarse de poner el metodo
+        print("\(ModelManager.url)/products")
+            Alamofire.request("\(ModelManager.url)/products").validate().responseArray { (  response: DataResponse<[Product]>) in
+            switch response.result {
+            case .success:
+                completionHandler(response.value, nil)
+                print("success")
+            case .failure(let error):
+                completionHandler(response.value, error)
+                print("error")
             }
+        
         }
-        return productArray
     }
     
+
+    
     //Get the list of products one caregory
-    static func  getProductForCategory(caregoryIndex : Int) -> [Product] {
-        let category = getProductCategoryFromFile()[caregoryIndex]
+    static func  getProductForCategory(caregoryIndex : Int, listOfProducts: [Product]) -> [Product] {
+        let category = getProductCategories(listOfProducts: listOfProducts)[caregoryIndex]
         var productForEachCategory : [Product] = []
-        
-        for product in 0..<getProductsFromFile().count{
-            if  getProductsFromFile()[product].getProductCategory() == category {
-                productForEachCategory.append(getProductsFromFile()[product])
-            }
-        }
+
+            for product in 0..<listOfProducts.count{
+                if  listOfProducts[product].category! == category {
+                        productForEachCategory.append(listOfProducts[product])
+                    }
+                }
+
         return productForEachCategory
+        
+
     }
     
     //Get a list of products names
     static func getProductsName(products : [Product]) -> [String]{
         var productsNames : [String] = []
         for product in products{
-            productsNames.append(product.getProductName())
+            productsNames.append(product.name!)
         }
         return productsNames
     }
@@ -133,4 +125,36 @@ class ModelManager {
         }
         return isEmpty
     }
+    
+    static func postCheckOut( token: String, cart: Cart, completionHandler: @escaping ( String?, Error?) -> Void) {
+        let headers: HTTPHeaders = [
+            "Authorization": token
+        ]
+        var parameters: [String: [Any]] = [
+            "cart": []
+        ]
+        for item in cart.cart{
+            if(item.value != 0){
+                parameters["cart"]?.append(["product_id": item.key.id!, "quantity": item.value])
+            }
+            
+        }
+        print(parameters)
+        print(headers)
+        //acordarse de poner el metodo
+        print("\(ModelManager.url)/checkout")
+        Alamofire.request("\(ModelManager.url)/checkout", method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate(statusCode: 200..<500).responseData(completionHandler: {response in
+            switch response.result {
+            case .success:
+                completionHandler(response.description, nil)
+                print("success")
+            case .failure(let error):
+                print(response.description)
+                completionHandler(response.description, error)
+                print("error")
+                
+            }
+        })
+    }
 }
+
