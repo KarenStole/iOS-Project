@@ -10,11 +10,11 @@ import Foundation
 import ObjectMapper
 class Cart : Mappable{
 
-    var cart : [Product : Int]
+    var cart : [CartItem] = []
     var date : String = ""
 
     required convenience init?(map: Map) {
-        self.init(dictionary: [:])
+        self.init()
         self.mapping(map: map)
     }
     
@@ -23,8 +23,7 @@ class Cart : Mappable{
         cart <- map["products"]
     }
     
-    init(dictionary : [Product : Int]) {
-        cart = dictionary
+    init() {
     }
     
     //Getting the total products in the cart
@@ -32,7 +31,7 @@ class Cart : Mappable{
         var cant = 0
         
         for product in self.cart{
-            if(product.value != 0){
+            if(product.quantity != 0){
                 cant+=1
             }
         }
@@ -44,27 +43,35 @@ class Cart : Mappable{
         
         var sum = 0
         let products = self.cart.filter { (arg0) -> Bool in
-            let (_, value) = arg0
-            return value != 0
+            let (cartItem) = arg0
+            return cartItem.quantity != 0
         }
         for product in products{
-            let price = product.key.price
-            let units = product.value
-            sum += (price!*units)
+            let price = product.product?.price
+            let units = product.quantity
+            sum += (price!*units!)
         }
         return sum
     }
     
-    // Initialize a cart: A dictionary with all product in the market but with quiantity 0
-    static func initCart(arrayOfProducts : [Product]?) -> Cart {
-        var dictionary = [Product : Int]()
-        if let arrayOfProducts = arrayOfProducts{
-        for product in arrayOfProducts{
-                dictionary[product] = 0
+    static func getProductQuantity(product : Product, cart: Cart) -> Int {
+            let cartItem = cart.cart.filter { (arg0) -> Bool in
+                let (cartItem) = arg0
+                return cartItem.product == product
+            }
+        if let first = cartItem.first {
+            return first.quantity!
+        }else{
+            return 0
         }
-        }
+        
+        //Adding one of the selected product in the cart
+        
+    }
     
-        return Cart(dictionary: dictionary)
+    // Initialize a cart: A dictionary with all product in the market but with quiantity 0
+    static func initCart() -> Cart {
+        return Cart()
     }
     
 }

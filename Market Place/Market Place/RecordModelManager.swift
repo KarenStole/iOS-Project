@@ -13,7 +13,7 @@ import AlamofireObjectMapper
 class RecordModelManager {
     
     static let sharedModelManager = RecordModelManager()
-    var cart = Cart.initCart(arrayOfProducts: nil)
+    var cart = Cart.initCart()
     
     private init(){}
     
@@ -30,7 +30,7 @@ class RecordModelManager {
                 completionHandler(response.value, nil)
                 print("success")
             case .failure(let error):
-                completionHandler(response.value, error)
+                completionHandler(nil, error)
                 print("error")
             }
             

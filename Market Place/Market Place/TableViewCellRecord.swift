@@ -12,7 +12,7 @@ class TableViewCellRecord: UITableViewCell {
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
-    var cartRecord = Cart(dictionary: [:])
+    var cartRecord = Cart()
     
     @IBOutlet weak var detailButton: UIButton!
 }

@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.082937"
+            timestampString = "580267389.039911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "17"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.083065"
+            timestampString = "580267389.0400079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "16"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.083137"
+            timestampString = "580267389.040113"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.0832011"
+            timestampString = "580267389.0401911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -170,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.0832649"
+            timestampString = "580267389.040266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ViewController.swift"
-            timestampString = "580016281.1979311"
+            timestampString = "580267389.0403399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
@@ -234,7 +234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.083409"
+            timestampString = "580267389.040421"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
@@ -250,7 +250,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.083474"
+            timestampString = "580267389.040491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
@@ -298,7 +298,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ModelManager.swift"
-            timestampString = "579994860.083547"
+            timestampString = "580267389.040584"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ViewController.swift"
-            timestampString = "580016281.1980799"
+            timestampString = "580267389.04066"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "initCellButtonStatus()"
             landmarkType = "7">
          </BreakpointContent>
@@ -362,12 +362,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Market Place/ViewControllerRecord.swift"
-            timestampString = "580016281.199523"
+            timestampString = "580267389.040758"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Market_Place.ViewControllerRecord.viewDidLoad() -&gt; ()"
+                  moduleName = "Market Place"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jsoarez/Desktop/Karen/iOS-Project/Market%20Place/Market%20Place/ViewControllerRecord.swift"
+                  timestampString = "580263498.06059"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;Market_Place.Cart&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Market_Place.ViewControllerRecord.viewDidLoad() -&gt; ()"
+                  moduleName = "Market Place"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jsoarez/Desktop/Karen/iOS-Project/Market%20Place/Market%20Place/ViewControllerRecord.swift"
+                  timestampString = "580263498.064907"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "57">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Market Place/ViewController.swift"
+            timestampString = "580267389.0427819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "showHideMinPlusButton(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Market Place/ViewController.swift"
+            timestampString = "580267389.042851"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -377,46 +441,62 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Market Place/ViewControllerRecord.swift"
-            timestampString = "580016281.200029"
+            filePath = "Market Place/RecordModelManager.swift"
+            timestampString = "580267389.042919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "getCartsFromApi(token:completionHandler:)"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Market_Place.ViewControllerRecord.viewDidLoad() -&gt; ()"
+                  symbolName = "static Market_Place.RecordModelManager.getCartsFromApi(token: Swift.String, completionHandler: (Swift.Optional&lt;Swift.Array&lt;Market_Place.Cart&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "Market Place"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jsoarez/Desktop/Karen/iOS-Project/Market%20Place/Market%20Place/ViewControllerRecord.swift"
-                  timestampString = "580016282.837521"
+                  urlString = "file:///Users/jsoarez/Desktop/Karen/iOS-Project/Market%20Place/Market%20Place/RecordModelManager.swift"
+                  timestampString = "580267026.512857"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "92">
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "1095">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;Market_Place.Cart&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Market_Place.ViewControllerRecord.viewDidLoad() -&gt; ()"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Swift.Array&lt;Market_Place.Cart&gt;&gt;) -&gt; () in static Market_Place.RecordModelManager.getCartsFromApi(token: Swift.String, completionHandler: (Swift.Optional&lt;Swift.Array&lt;Market_Place.Cart&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "Market Place"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jsoarez/Desktop/Karen/iOS-Project/Market%20Place/Market%20Place/ViewControllerRecord.swift"
-                  timestampString = "580016282.842002"
+                  urlString = "file:///Users/jsoarez/Desktop/Karen/iOS-Project/Market%20Place/Market%20Place/RecordModelManager.swift"
+                  timestampString = "580267026.517331"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "20"
-                  endingLineNumber = "20"
-                  offsetFromSymbolStart = "57">
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "37">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Market Place/RecordModelManager.swift"
+            timestampString = "580267389.0429831"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "getCartsFromApi(token:completionHandler:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

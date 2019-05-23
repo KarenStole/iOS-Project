@@ -17,7 +17,9 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var checkOutButon: UIButton!
     
     var modelController = ModelManager.sharedModelManager
+    var modelControllerRecord = RecordModelManager.sharedModelManager
     var typeValue = 1
+    var isRecordViewController = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +57,7 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                     UIAlertAction in
                     self.navigationController?.popToRootViewController(animated: true)
                     
-                    self.modelController.cart = Cart.initCart(arrayOfProducts: nil)
+                    self.modelController.cart = Cart.initCart()
                 }
                 
                 alert.addAction(okAction)
@@ -70,7 +72,13 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
     
     //######## Set the numbers of items in the CollectionView ############################################
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return modelController.cart.cantOfProducts()
+        if(isRecordViewController){
+            return modelControllerRecord.cart.cantOfProducts()
+        }
+        else{
+            return modelController.cart.cantOfProducts()
+        }
+        
     }
     
     //####### Set the collectionViews's cell settings (image and labels) for only thoes prodoucts in the cart which quantity is > 0 ####
@@ -78,24 +86,30 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as! CollectionViewCell
         
         // Getting the items form the cart that value is > 0
-        let products = modelController.cart.cart.filter { (arg0) -> Bool in
-            let (_, value) = arg0
-            return value != 0
+        var cart : Cart
+        if(isRecordViewController){
+            cart = modelControllerRecord.cart
+        }else{
+            cart = modelController.cart
         }
-        let product = Array(products.keys)[indexPath.row]
+        let products = cart.cart.filter { (arg0) -> Bool in
+            let (item) = arg0
+            return item.quantity != 0
+        }
+        let cartItem = products[indexPath.row]
         
-        if (modelController.cart.cart[product] != 0){
-            cell.product = product
-            if let image = product.image{
+        if ( cartItem.quantity != 0){
+            cell.product = cartItem.product
+            if let image = cartItem.product!.image{
                 cell.productImageView.kf.setImage(with: URL(string: image))
             }
             else {
                 cell.productImageView.kf.setImage(with: URL(string: "https://static.thenounproject.com/png/340719-200.png"))
                 
             }
-            cell.productPriceLebel.text = "$\(product.price ?? 0)"
-            cell.productNameLabel.text = product.name
-            cell.productUnitLabel.text = "\(modelController.cart.cart[product] ?? 0) unit"
+            cell.productPriceLebel.text = "$\(cartItem.product!.price ?? 0)"
+            cell.productNameLabel.text = cartItem.product!.name
+            cell.productUnitLabel.text = "\(cartItem.quantity ?? 0) unit"
             
         }
         
@@ -113,30 +127,45 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
     
     //##Show an alert with a picker when a item from collectionView is selected and also setting the product's quantity when the alert is closed ##
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = UIViewController()
-        vc.preferredContentSize = CGSize(width: 250,height: 300)
-        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 300))
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        vc.view.addSubview(pickerView)
-        let cellCollectionView = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-        if let product = cellCollectionView.product{
-            pickerView.selectRow(modelController.cart.cart[product]!-1, inComponent: 0, animated: true)
-            typeValue = modelController.cart.cart[product]!
-        }
-        let doneAction = UIAlertAction(title: "Done", style: UIAlertAction.Style.default) {
-            UIAlertAction in
-                let cellCollectionView = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-                if let product = cellCollectionView.product{
-                    self.modelController.cart.cart[product] = self.typeValue
-                    self.collectionView.reloadItems(at: [indexPath])
+        if(!isRecordViewController){
+            let vc = UIViewController()
+            vc.preferredContentSize = CGSize(width: 250,height: 300)
+            let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 300))
+            pickerView.delegate = self
+            pickerView.dataSource = self
+            vc.view.addSubview(pickerView)
+            let cellCollectionView = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+            if let product = cellCollectionView.product{
+                let quantity = modelController.cart.cart.filter { (arg0) -> Bool in
+                    let (cartItem) = arg0
+                    return (cartItem.product == product)
                 }
-            self.totalPriceLabel.text = "$\(self.modelController.cart.getTotal())"
+                if let first = quantity.first{
+                pickerView.selectRow((first.quantity)! - 1, inComponent: 0, animated: true)
+                typeValue = (first.quantity)!
+            }
+            }
+            let doneAction = UIAlertAction(title: "Done", style: UIAlertAction.Style.default) {
+                UIAlertAction in
+                    let cellCollectionView = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+                    if let product = cellCollectionView.product{
+                        let quantity = self.modelController.cart.cart.filter { (arg0) -> Bool in
+                            let (cartItem) = arg0
+                            return (cartItem.product == product)
+                            }
+                        if let first = quantity.first{
+                            first.quantity = self.typeValue
+                        }
+                        
+                        self.collectionView.reloadItems(at: [indexPath])
+                    }
+                self.totalPriceLabel.text = "$\(self.modelController.cart.getTotal())"
+            }
+            let editUnitsAlert = UIAlertController(title: "Change the units", message: "", preferredStyle: UIAlertController.Style.alert)
+            editUnitsAlert.setValue(vc, forKey: "contentViewController")
+            editUnitsAlert.addAction(doneAction)
+            editUnitsAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            present(editUnitsAlert, animated: true)
         }
-        let editUnitsAlert = UIAlertController(title: "Change the units", message: "", preferredStyle: UIAlertController.Style.alert)
-        editUnitsAlert.setValue(vc, forKey: "contentViewController")
-        editUnitsAlert.addAction(doneAction)
-        editUnitsAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(editUnitsAlert, animated: true)
     }
 }

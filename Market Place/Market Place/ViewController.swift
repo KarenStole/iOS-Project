@@ -37,7 +37,7 @@ class ViewController: UIViewController {
                     self.products = result
                 self.categories = ModelManager.getProductCategories(listOfProducts: self.products)
                 self.initCellButtonStatus()
-                self.modelController.cart = Cart.initCart(arrayOfProducts: self.products)
+                self.modelController.cart = Cart.initCart()
                 self.tableView.reloadData()
                 }
             })
@@ -56,10 +56,11 @@ class ViewController: UIViewController {
      Reload the tableView for new data
      */
     override func viewWillAppear(_ animated: Bool) {
-        cartButton.isUserInteractionEnabled = modelController.emptyCart
-        if(!modelController.emptyCart){
+        cartButton.isUserInteractionEnabled =
+            !modelController.emptyCart
+        if(modelController.emptyCart){
             initCellButtonStatus()
-            modelController.cart = Cart.initCart(arrayOfProducts: self.products)
+            modelController.cart = Cart.initCart()
         }
         tableView.reloadData()
     }
@@ -93,17 +94,15 @@ class ViewController: UIViewController {
             //Getting the product from the selected cell
             let productOfIndexDefined = (tableView.cellForRow(at: indexPath) as! TableViewCell).product
             if let productOfIndexDefined = productOfIndexDefined {
-                if let quantityOfProduct = modelController.cart.cart[productOfIndexDefined]{
                     //Adding one of the selected product in the cart
-                    modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct+1, cart: modelController.cart)
-                    buttonAddStatusFormCells[indexPath.section][productOfIndexDefined] = true
-                }
+                modelController.addProductIntoTheCart(product: productOfIndexDefined, cart: modelController.cart)
+                buttonAddStatusFormCells[indexPath.section][productOfIndexDefined] = true
             }
             //Refresh the cell to get the actual product's quantity
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         // change the cartButton status (allowed to click)
-        cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: modelController.cart)
+        cartButton.isUserInteractionEnabled = !modelController.isCartEmpty(cart: modelController.cart)
     }
     
     /* Add product into the cart (+ button) */
@@ -113,10 +112,10 @@ class ViewController: UIViewController {
         if let indexPath = indexPath {
             let productOfIndexDefined = (tableView.cellForRow(at: indexPath) as! TableViewCell).product
             if let productOfIndexDefined = productOfIndexDefined{
-                if let quantityOfProduct = modelController.cart.cart[productOfIndexDefined]{
-                    modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct+1, cart: modelController.cart)
+                //Adding one of the selected product in the cart
+                modelController.addProductIntoTheCart(product: productOfIndexDefined, cart: modelController.cart)
                     buttonAddStatusFormCells[indexPath.section][productOfIndexDefined] = true
-                }
+                
             }
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
@@ -131,19 +130,18 @@ class ViewController: UIViewController {
         if let indexPath = indexPath {
             let productOfIndexDefined = (tableView.cellForRow(at: indexPath) as! TableViewCell).product
             if let productOfIndexDefined = productOfIndexDefined{
-                if let quantityOfProduct = modelController.cart.cart[productOfIndexDefined]{
-                    if(modelController.cart.cart[productOfIndexDefined] != 0){
-                        modelController.addProductIntoTheCart(product: productOfIndexDefined, quantity: quantityOfProduct-1, cart: modelController.cart)
-                    }
-                    if(modelController.cart.cart[productOfIndexDefined] == 0){
+                modelController.removeProductIntoTheCart(product: productOfIndexDefined, cart: modelController.cart)
+                let quantityOfProduct = Cart.getProductQuantity(product: productOfIndexDefined, cart: modelController.cart)
+
+                if(quantityOfProduct == 0){
                         buttonAddStatusFormCells[indexPath.section][productOfIndexDefined] = false
                     }
-                }
+                
             }
             tableView.reloadRows(at: [indexPath], with: .automatic)
             
         }
-        cartButton.isUserInteractionEnabled = modelController.isCartEmpty(cart: modelController.cart)
+        cartButton.isUserInteractionEnabled = !modelController.isCartEmpty(cart: modelController.cart)
     }
     
     /* Swich to the checkOut viewController*/
@@ -210,7 +208,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     //iterate in all products in the market and also the searched names, if each names are equals, show only these in the tableView
                 if(prod.name == prodNameSearched){
                     if let status = buttonAddStatusFormCells[indexPath.section][prod]{
-                        if let quantity = modelController.cart.cart[prod]{
+                        let quantity = Cart.getProductQuantity(product: prod, cart: modelController.cart)
                             print("entro")
                             cell.product = prod
                             cell.productNameLaber.text = prod.name
@@ -226,14 +224,14 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                             cell.numberOfProducts = quantity
                             }
                         }
-                    }
+                    
                 }
             }
         }
         // if im not searching show all the products
         else{
             if let status = buttonAddStatusFormCells[indexPath.section][product[indexPath.row]]{
-                if let numOfProduct = modelController.cart.cart[product[indexPath.row]]{
+                let numOfProduct = Cart.getProductQuantity(product: product[indexPath.row], cart: modelController.cart)
                     cell.product = product[indexPath.row]
                     cell.productNameLaber.text = product[indexPath.row].name
                     cell.productPriceLaber.text = "$\(product[indexPath.row].price ?? 0)"
@@ -247,8 +245,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                     cell.showAddButton = status
                     cell.showPlusMinButton = !status
                     cell.numberOfProducts = numOfProduct
-                    
-                }
+                
             }
         }
 

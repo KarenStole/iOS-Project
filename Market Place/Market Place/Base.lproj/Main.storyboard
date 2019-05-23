@@ -339,7 +339,9 @@
                                             <constraint firstItem="gfh-P9-fnK" firstAttribute="centerY" secondItem="uNR-W8-T0Z" secondAttribute="centerY" id="iHd-b6-Axq"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="dateLabel" destination="nqg-hf-wzg" id="Om7-tg-6kW"/>
                                             <outlet property="detailButton" destination="gfh-P9-fnK" id="oAK-vB-5AM"/>
+                                            <outlet property="totalPriceLabel" destination="JKQ-VF-vhc" id="DBW-PW-eGy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

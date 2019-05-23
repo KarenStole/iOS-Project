@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0719DB2294A788006ACC7D /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0719DA2294A788006ACC7D /* CartItem.swift */; };
 		2C1C74DC22727C2B00D45927 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1C74DB22727C2A00D45927 /* Cart.swift */; };
 		2C3D5F562276805C00FEC294 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3D5F552276805C00FEC294 /* CollectionViewCell.swift */; };
 		2C473D6F229242D5007E694B /* TableViewCellRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C473D6E229242D5007E694B /* TableViewCellRecord.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		0C4ADCBA1C0B7715D66680AE /* Pods_Market_Place.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Market_Place.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C0719DA2294A788006ACC7D /* CartItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItem.swift; sourceTree = "<group>"; };
 		2C1C74DB22727C2A00D45927 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		2C3D5F552276805C00FEC294 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		2C473D6E229242D5007E694B /* TableViewCellRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellRecord.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				2CC2096B22696560003F30A2 /* Info.plist */,
 				2C6CDB3E226AAD7E00F074D5 /* Products.plist */,
 				2CE61100226D1019008A5056 /* Promotions.plist */,
+				2C0719DA2294A788006ACC7D /* CartItem.swift */,
 			);
 			path = "Market Place";
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 			files = (
 				2C9341F5227A5891006172BE /* CollectionViewCellPromotion.swift in Sources */,
 				2C473D6F229242D5007E694B /* TableViewCellRecord.swift in Sources */,
+				2C0719DB2294A788006ACC7D /* CartItem.swift in Sources */,
 				2C72475E226FB381006A77C5 /* TableViewCell.swift in Sources */,
 				2C7813A42276670A00CD1637 /* ViewControllerCart.swift in Sources */,
 				2C3D5F562276805C00FEC294 /* CollectionViewCell.swift in Sources */,

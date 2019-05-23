@@ -14,7 +14,7 @@ import AlamofireObjectMapper
 class ModelManager {
 
     static let sharedModelManager = ModelManager()
-    var cart = Cart.initCart(arrayOfProducts: nil)
+    var cart = Cart.initCart()
     var emptyCart: Bool {
         get {
             return isCartEmpty(cart: cart)
@@ -110,20 +110,55 @@ class ModelManager {
     //#############    FUNCTIONS TO MANAGE THE CART #################################################
     
     // Update the quantity of a product in the cart
-    func addProductIntoTheCart(product : Product, quantity : Int, cart : Cart) {
-        cart.cart.updateValue(quantity, forKey: product)
+    func addProductIntoTheCart(product : Product, cart : Cart) {
+        let item = CartItem()
+        let itemCart = self.cart.cart.filter { (arg0) -> Bool in
+            let (cartItem) = arg0
+            return cartItem.product == product
+        }
+        if(itemCart.isEmpty){
+            item.product = product
+            item.quantity = 1
+            cart.cart.append(item)
+        }else{
+            if let quantity = itemCart.first?.quantity{
+                itemCart.first?.quantity = (quantity + 1)
+            }
+            
+            
+        }
+        
     }
+    
+    func removeProductIntoTheCart(product : Product, cart : Cart) {
+        let itemCart = self.cart.cart.filter { (arg0) -> Bool in
+            let (cartItem) = arg0
+            return cartItem.product == product
+        }
+        if(!itemCart.isEmpty){
+            if let quantity = itemCart.first?.quantity{
+                itemCart.first?.quantity = (quantity - 1)
+                if(quantity == 1){
+                    if let index = cart.cart.index(of: itemCart.first!) {
+                        cart.cart.remove(at: index)
+                    }
+                }
+            }
+
+            
+            
+        }
+        
+    }
+
     
     //Check if the cart is empty
     func isCartEmpty(cart : Cart) -> Bool {
-        var isEmpty = false
-        for productInCart in cart.cart{
-            if productInCart.value != 0 {
-                isEmpty = true
-                break
-            }
+        if(cart.cart.isEmpty){
+            return true
+        }else{
+            return false
         }
-        return isEmpty
     }
     
     static func postCheckOut( token: String, cart: Cart, completionHandler: @escaping ( String?, Error?) -> Void) {
@@ -134,8 +169,8 @@ class ModelManager {
             "cart": []
         ]
         for item in cart.cart{
-            if(item.value != 0){
-                parameters["cart"]?.append(["product_id": item.key.id!, "quantity": item.value])
+            if(item.quantity != 0){
+                parameters["cart"]?.append(["product_id": item.product?.id, "quantity": item.quantity])
             }
             
         }
