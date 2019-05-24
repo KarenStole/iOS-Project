@@ -75,14 +75,14 @@
                                                         <color key="titleShadowColor" red="0.3834014765" green="0.21676191249999999" blue="0.69783223999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="showHideButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZVp-7y-9r7"/>
+                                                        <action selector="firstAddButton:" destination="om6-4F-dtq" eventType="touchUpInside" id="k7H-TC-wU0"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXT-dc-ukv">
                                                     <rect key="frame" x="347.5" y="43" width="26.5" height="21"/>
                                                     <state key="normal" image="icon-plus"/>
                                                     <connections>
-                                                        <action selector="addProductToCart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZsM-dJ-69S"/>
+                                                        <action selector="addItem:" destination="om6-4F-dtq" eventType="touchUpInside" id="J57-o0-7jH"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oc-Tz-s4P">
@@ -95,7 +95,7 @@
                                                     <rect key="frame" x="284" y="42.5" width="26.5" height="21.5"/>
                                                     <state key="normal" image="icon-minus"/>
                                                     <connections>
-                                                        <action selector="showHideMinPlusButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dLO-iP-K4n"/>
+                                                        <action selector="removeItem:" destination="om6-4F-dtq" eventType="touchUpInside" id="8ww-4U-12Z"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -314,7 +314,7 @@
                                                         <color key="titleColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="goToRecord:" destination="sTx-Z9-IrN" eventType="touchUpInside" id="7qY-0G-zKO"/>
+                                                        <action selector="goToDetail:" destination="uNR-W8-T0Z" eventType="touchUpInside" id="5U5-Be-wLK"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqg-hf-wzg">
@@ -420,7 +420,7 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9gi-Ii-2DH">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9gi-Ii-2DH">
                                                     <rect key="frame" x="5" y="2" width="186" height="161"/>
                                                 </imageView>
                                             </subviews>

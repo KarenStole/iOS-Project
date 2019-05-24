@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ProductTableViewCellDelegate {
+    func addItem(cell: TableViewCell) -> Void
+    func removeItem(cell: TableViewCell) -> Void
+}
+
 class TableViewCell: UITableViewCell {
 
     @IBOutlet weak var productPictureImageView: UIImageView!
@@ -22,6 +27,7 @@ class TableViewCell: UITableViewCell {
     var showAddButton = false
     var showPlusMinButton = true
     var numberOfProducts = 1
+    var delegate : ProductTableViewCellDelegate?
     
     //Setting the style of the items in the cell
     override func layoutSubviews() {
@@ -38,5 +44,23 @@ class TableViewCell: UITableViewCell {
         minusButton.isHidden = self.showPlusMinButton
         numberOfProductsLabel.isHidden = self.showPlusMinButton
         
+    }
+    
+    func didAddItem (cell: TableViewCell){
+        delegate?.addItem(cell: cell)
+    }
+    func didRemoveItem (cell: TableViewCell){
+        delegate?.removeItem(cell: cell)
+    }
+    
+    //La accion del boton va aca
+    @IBAction func firstAddButton(_ sender: Any) {
+       didAddItem(cell: self)
+    }
+    @IBAction func removeItem(_ sender: Any) {
+       didRemoveItem(cell: self)
+    }
+    @IBAction func addItem(_ sender: Any) {
+       didAddItem(cell: self)
     }
 }

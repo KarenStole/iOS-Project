@@ -47,19 +47,12 @@ class ViewControllerRecord: UIViewController {
         destinationVC.title = "Details"
         
     }
-    @IBAction func goToRecord(_ sender: Any) {
-      let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: tableView)
-        let indexPath = tableView.indexPathForRow(at:buttonPosition)
-        if let indexPath = indexPath {
-            let cell = tableView.cellForRow(at: indexPath) as! TableViewCellRecord
-            self.modelRecordController.cart = cell.cartRecord
-            performSegue(withIdentifier: "recordSegue", sender: self)
-        }
-    }
+
     
 }
 
-extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource{
+extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource, DetailTableViewCellDelegate{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(carts.isEmpty){
             return 1
@@ -78,6 +71,7 @@ extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource{
             cell.totalPriceLabel.text = ""
             cell.detailButton.isHidden = true
         }else{
+            cell.delegate = self
             cell.detailButton.isHidden = false
             let formatter = DateFormatter()
             formatter.dateFormat = "dd-MMM-yyyy HH:mm"
@@ -92,5 +86,14 @@ extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+    }
+    
+    func goToDetail(cell: TableViewCellRecord) {
+        let indexPath = tableView.indexPath(for: cell)
+        if let indexPath = indexPath {
+            let cell = tableView.cellForRow(at: indexPath) as! TableViewCellRecord
+            self.modelRecordController.cart = cell.cartRecord
+            performSegue(withIdentifier: "recordSegue", sender: self)
+        }
     }
 }
