@@ -308,8 +308,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfh-P9-fnK">
-                                                    <rect key="frame" x="327" y="35" width="47" height="30"/>
-                                                    <state key="normal" title="Details"/>
+                                                    <rect key="frame" x="291" y="40" width="83" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <state key="normal" title="Details">
+                                                        <color key="titleColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="goToRecord:" destination="sTx-Z9-IrN" eventType="touchUpInside" id="7qY-0G-zKO"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqg-hf-wzg">
                                                     <rect key="frame" x="20" y="21" width="42" height="21"/>
@@ -326,22 +332,24 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="gfh-P9-fnK" secondAttribute="trailing" constant="40" id="F10-ub-MT3"/>
-                                                <constraint firstItem="gfh-P9-fnK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nqg-hf-wzg" secondAttribute="trailing" constant="10" id="Gnd-Sz-2Ew"/>
                                                 <constraint firstItem="nqg-hf-wzg" firstAttribute="top" secondItem="a4F-KL-X4H" secondAttribute="topMargin" constant="10" id="Plw-pX-pgu"/>
                                                 <constraint firstItem="JKQ-VF-vhc" firstAttribute="top" secondItem="nqg-hf-wzg" secondAttribute="bottom" constant="9" id="U5V-zV-DWD"/>
-                                                <constraint firstItem="gfh-P9-fnK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JKQ-VF-vhc" secondAttribute="trailing" constant="10" id="ape-fB-6tY"/>
+                                                <constraint firstItem="gfh-P9-fnK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nqg-hf-wzg" secondAttribute="trailing" constant="10" id="f3t-JE-UA1"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="JKQ-VF-vhc" secondAttribute="bottom" constant="21" id="fww-qb-oOT"/>
+                                                <constraint firstItem="gfh-P9-fnK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JKQ-VF-vhc" secondAttribute="trailing" constant="10" id="kzC-m2-Wop"/>
                                                 <constraint firstItem="JKQ-VF-vhc" firstAttribute="leading" secondItem="a4F-KL-X4H" secondAttribute="leadingMargin" id="wD1-vB-1Qv"/>
                                                 <constraint firstItem="nqg-hf-wzg" firstAttribute="leading" secondItem="a4F-KL-X4H" secondAttribute="leadingMargin" id="wct-sV-e26"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
+                                            <constraint firstItem="gfh-P9-fnK" firstAttribute="width" secondItem="uNR-W8-T0Z" secondAttribute="width" multiplier="0.2" id="Ai3-xY-7cA"/>
+                                            <constraint firstItem="gfh-P9-fnK" firstAttribute="height" secondItem="uNR-W8-T0Z" secondAttribute="height" multiplier="0.2" id="axQ-LM-MYV"/>
                                             <constraint firstItem="gfh-P9-fnK" firstAttribute="centerY" secondItem="uNR-W8-T0Z" secondAttribute="centerY" id="iHd-b6-Axq"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="dateLabel" destination="nqg-hf-wzg" id="Om7-tg-6kW"/>
+                                            <outlet property="dateLabel" destination="nqg-hf-wzg" id="cz0-hi-nm3"/>
                                             <outlet property="detailButton" destination="gfh-P9-fnK" id="oAK-vB-5AM"/>
-                                            <outlet property="totalPriceLabel" destination="JKQ-VF-vhc" id="DBW-PW-eGy"/>
+                                            <outlet property="totalPriceLabel" destination="JKQ-VF-vhc" id="CJ9-xe-4JB"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -362,11 +370,12 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="W2h-IT-TMX" id="q1R-VN-Z18"/>
+                        <segue destination="MMh-25-HOX" kind="show" identifier="recordSegue" id="YhU-OB-giJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pLX-3C-hpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="544.92753623188412" y="883.92857142857144"/>
+            <point key="canvasLocation" x="389.85507246376812" y="857.8125"/>
         </scene>
         <!--Checkout-->
         <scene sceneID="djX-9l-o2R">
@@ -498,7 +507,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2e6-Ad-3IJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="840.57971014492762" y="128.57142857142856"/>
+            <point key="canvasLocation" x="1135" y="143"/>
         </scene>
     </scenes>
     <resources>
@@ -506,4 +515,7 @@
         <image name="icon-minus" width="8" height="3"/>
         <image name="icon-plus" width="12" height="12"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="YhU-OB-giJ"/>
+    </inferredMetricsTieBreakers>
 </document>

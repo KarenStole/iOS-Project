@@ -40,7 +40,7 @@ class ModelManager {
                 completionHandler(response.value, nil)
                 print("success")
             case .failure(let error):
-                completionHandler(response.value, error)
+                completionHandler(nil, error)
                 print("error")
             }
             
@@ -72,7 +72,7 @@ class ModelManager {
                 completionHandler(response.value, nil)
                 print("success")
             case .failure(let error):
-                completionHandler(response.value, error)
+                completionHandler(nil, error)
                 print("error")
             }
         
@@ -165,27 +165,35 @@ class ModelManager {
         let headers: HTTPHeaders = [
             "Authorization": token
         ]
-        var parameters: [String: [Any]] = [
+        var parameters: [String: [[String:Int]]] = [
             "cart": []
         ]
         for item in cart.cart{
             if(item.quantity != 0){
-                parameters["cart"]?.append(["product_id": item.product?.id, "quantity": item.quantity])
+                parameters["cart"]!.append(["product_id": item.product!.id!, "quantity": item.quantity!])
             }
             
         }
-        print(parameters)
+        var jsonString: String
+        do{
+            let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            jsonString = String(data: jsonData, encoding: String.Encoding.ascii)!
+            print (jsonString)
+        }catch{}
+
+        
         print(headers)
         //acordarse de poner el metodo
         print("\(ModelManager.url)/checkout")
-        Alamofire.request("\(ModelManager.url)/checkout", method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate(statusCode: 200..<500).responseData(completionHandler: {response in
+        Alamofire.request("\(ModelManager.url)/checkout", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate(statusCode: 200..<500).responseString(completionHandler: {response in
             switch response.result {
             case .success:
-                completionHandler(response.description, nil)
+                completionHandler(response.value, nil)
                 print("success")
+                print(response.value!)
             case .failure(let error):
                 print(response.description)
-                completionHandler(response.description, error)
+                completionHandler(nil, error)
                 print("error")
                 
             }

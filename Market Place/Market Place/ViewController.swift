@@ -40,12 +40,28 @@ class ViewController: UIViewController {
                 self.modelController.cart = Cart.initCart()
                 self.tableView.reloadData()
                 }
+            if let error = error{
+                let alert = UIAlertController(title: "Something went wrong!", message: "Sorry, we're having some problems. Retry in some minutes", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+                print("LOG ERROR: Error loading products: \(error.localizedDescription)")
+            }
             })
         ModelManager.getPromotionsFromApi(completionHandler: {result, error in
             if let result = result{
                 self.promotions = result
                 self.pageControl.numberOfPages = self.promotions.count
                 self.bannerCollectionView.reloadData()
+            }
+            if let error = error{
+                let alert = UIAlertController(title: "Something went wrong!", message: "Sorry, we're having some problems. Retry in some minutes", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+                print("LOG ERROR: Error loading promotions: \(error.localizedDescription)")
             }
         })
 
@@ -84,6 +100,7 @@ class ViewController: UIViewController {
             productInCat.removeAll()
         }
     }
+
     
     /* Show or hide the Add button from a selected cell*/
     @IBAction func showHideButton(_ sender: Any) {
@@ -145,7 +162,20 @@ class ViewController: UIViewController {
     }
     
     /* Swich to the checkOut viewController*/
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.destination is ViewControllerCart{
+            let destinationVC = segue.destination as! ViewControllerCart
+            destinationVC.modelController = self.modelController
+            destinationVC.isRecordViewController = false
+        }else{
+            let destinationVC = segue.destination as! ViewControllerRecord
+            destinationVC.modelController = self.modelController
+        }
+
+    }
     @IBAction func goToCheckout(_ sender: Any) {
+
         performSegue(withIdentifier: "checkOutView", sender: self)
     }
 
@@ -275,6 +305,7 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
         
         if(promotions.isEmpty){
             cell.textMaxLabel.text = "Loading..."
+            cell.textMinLabel.text = ""
         }
         else{
             cell.bannerImaeView.kf.setImage(with: URL(string: promotions[indexPath.row].image!))

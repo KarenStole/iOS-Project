@@ -11,7 +11,7 @@ import ObjectMapper
 class Cart : Mappable{
 
     var cart : [CartItem] = []
-    var date : String = ""
+    var date : Date? = nil
 
     required convenience init?(map: Map) {
         self.init()
@@ -19,7 +19,7 @@ class Cart : Mappable{
     }
     
     func mapping(map: Map) {
-        date <- map["date"]
+        date <- (map["date"], CustomDateTransform())
         cart <- map["products"]
     }
     

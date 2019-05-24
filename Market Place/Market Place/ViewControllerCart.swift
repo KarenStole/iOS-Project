@@ -23,8 +23,17 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        totalPriceLabel.text = "$\(modelController.cart.getTotal())"
+        if(!isRecordViewController){
+            totalPriceLabel.text = "$\(modelController.cart.getTotal())"
+            checkOutButon.isHidden = false
+
+        }
+        else{
+            totalPriceLabel.text = "$\(modelControllerRecord.cart.getTotal())"
+            checkOutButon.isHidden = true
+        }
         checkOutButon.layer.cornerRadius = 20
+
     }
     
     //######### One section in pickerView ################
@@ -64,8 +73,17 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 
                 self.present(alert, animated: true)
             }
+            if let error = error{
+                    let alert = UIAlertController(title: "Something went wrong!", message: "An error has occurred making the purchase. Retry in some minutes", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true)
+                    print("LOG ERROR: Error making the purchase: \(error.localizedDescription)")
+                }
+            }
             
-        })
+        )
     }
 }
 extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

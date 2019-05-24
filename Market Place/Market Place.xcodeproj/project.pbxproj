@@ -16,6 +16,7 @@
 		2C7813A42276670A00CD1637 /* ViewControllerCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7813A32276670A00CD1637 /* ViewControllerCart.swift */; };
 		2C9341F3227A5530006172BE /* Promotions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9341F2227A5530006172BE /* Promotions.swift */; };
 		2C9341F5227A5891006172BE /* CollectionViewCellPromotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9341F4227A5891006172BE /* CollectionViewCellPromotion.swift */; };
+		2CBB13B22297669300468621 /* CustomDateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBB13B12297669200468621 /* CustomDateTransform.swift */; };
 		2CC209602269655D003F30A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2095F2269655D003F30A2 /* AppDelegate.swift */; };
 		2CC209622269655D003F30A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC209612269655D003F30A2 /* ViewController.swift */; };
 		2CC209652269655D003F30A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CC209632269655D003F30A2 /* Main.storyboard */; };
@@ -63,6 +64,7 @@
 		2C7813A32276670A00CD1637 /* ViewControllerCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCart.swift; sourceTree = "<group>"; };
 		2C9341F2227A5530006172BE /* Promotions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promotions.swift; sourceTree = "<group>"; };
 		2C9341F4227A5891006172BE /* CollectionViewCellPromotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellPromotion.swift; sourceTree = "<group>"; };
+		2CBB13B12297669200468621 /* CustomDateTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDateTransform.swift; sourceTree = "<group>"; };
 		2CC2095C2269655D003F30A2 /* Market Place.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Market Place.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC2095F2269655D003F30A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CC209612269655D003F30A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		2CC2095E2269655D003F30A2 /* Market Place */ = {
 			isa = PBXGroup;
 			children = (
+				2CBB13B12297669200468621 /* CustomDateTransform.swift */,
 				2CFEF42F2291C5E100C44736 /* AuthenticationManager.swift */,
 				2CFEF42D2291C57900C44736 /* AuthenticationResponse.swift */,
 				2CFEF4312291F70900C44736 /* ViewControllerRecord.swift */,
@@ -460,6 +463,7 @@
 				2CC209622269655D003F30A2 /* ViewController.swift in Sources */,
 				2CFEF4302291C5E100C44736 /* AuthenticationManager.swift in Sources */,
 				2CFEF4322291F70900C44736 /* ViewControllerRecord.swift in Sources */,
+				2CBB13B22297669300468621 /* CustomDateTransform.swift in Sources */,
 				2CFEF42E2291C57A00C44736 /* AuthenticationResponse.swift in Sources */,
 				2CFEF4342291FB6400C44736 /* RecordModelManager.swift in Sources */,
 				2CC209602269655D003F30A2 /* AppDelegate.swift in Sources */,

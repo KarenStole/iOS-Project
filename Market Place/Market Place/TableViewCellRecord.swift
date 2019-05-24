@@ -15,4 +15,12 @@ class TableViewCellRecord: UITableViewCell {
     var cartRecord = Cart()
     
     @IBOutlet weak var detailButton: UIButton!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        detailButton.layer.cornerRadius = 10
+        detailButton.clipsToBounds = true
+        detailButton.layer.borderWidth = 2
+        detailButton.layer.borderColor = UIColor.purple.cgColor
+    }
 }

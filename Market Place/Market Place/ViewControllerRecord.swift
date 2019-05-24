@@ -10,23 +10,53 @@ import UIKit
 
 class ViewControllerRecord: UIViewController {
 
-    let modelRecordController = RecordModelManager.sharedModelManager
-    let modelController = ModelManager.sharedModelManager
+    var modelRecordController = RecordModelManager.sharedModelManager
+    var modelController = ModelManager.sharedModelManager
     var carts : [Cart] = []
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         print (modelController.token)
+        carts.removeAll()
         RecordModelManager.getCartsFromApi(token: modelController.token, completionHandler: {response, error in
             if let response = response{
                 self.carts = response
                 self.tableView.reloadData()
             }
+            if let error = error{
+                let alert = UIAlertController(title: "Something went wrong!", message: "An error has occurred getting the purchases. Retry in some minutes", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+                print("LOG ERROR: Error getting the purchases: \(error.localizedDescription)")
+            }
         })
-        
-        // Do any additional setup after loading the view.
     }
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! ViewControllerCart
+        destinationVC.modelController = self.modelController
+        destinationVC.modelControllerRecord = self.modelRecordController
+        destinationVC.isRecordViewController = true
+        destinationVC.title = "Details"
+        
+    }
+    @IBAction func goToRecord(_ sender: Any) {
+      let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: tableView)
+        let indexPath = tableView.indexPathForRow(at:buttonPosition)
+        if let indexPath = indexPath {
+            let cell = tableView.cellForRow(at: indexPath) as! TableViewCellRecord
+            self.modelRecordController.cart = cell.cartRecord
+            performSegue(withIdentifier: "recordSegue", sender: self)
+        }
+    }
+    
 }
 
 extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource{
@@ -46,12 +76,21 @@ extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource{
         if(carts.isEmpty){
             cell.dateLabel.text = "Loading..."
             cell.totalPriceLabel.text = ""
+            cell.detailButton.isHidden = true
         }else{
-            cell.dateLabel.text = carts[indexPath.row].date
-            let totalPrice = Cart.getTotal(carts[indexPath.row])
-            cell.totalPriceLabel.text = "\(totalPrice)"
+            cell.detailButton.isHidden = false
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd-MMM-yyyy HH:mm"
+            let myStringafd = formatter.string(from: carts[indexPath.row].date!)
+            cell.dateLabel.text = myStringafd
+            let totalPrice = carts[indexPath.row].getTotal()
+            cell.totalPriceLabel.text = "$\(totalPrice)"
+            cell.cartRecord = carts[indexPath.row]
         }
         return cell
         
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
     }
 }
