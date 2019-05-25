@@ -14,6 +14,7 @@ class ViewControllerRecord: UIViewController {
     var modelController = ModelManager.sharedModelManager
     var carts : [Cart] = []
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,7 +66,7 @@ extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource, Deta
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recordCell", for: indexPath) as! TableViewCellRecord
-       /* let product = ModelManager.getProductForCategory(caregoryIndex: indexPath.section, listOfProducts: products)*/
+        cell.selectionStyle = .none
         if(carts.isEmpty){
             cell.dateLabel.text = "Loading..."
             cell.totalPriceLabel.text = ""
@@ -77,8 +78,8 @@ extension ViewControllerRecord: UITableViewDelegate, UITableViewDataSource, Deta
             formatter.dateFormat = "dd-MMM-yyyy HH:mm"
             let myStringafd = formatter.string(from: carts[indexPath.row].date!)
             cell.dateLabel.text = myStringafd
-            let totalPrice = carts[indexPath.row].getTotal()
-            cell.totalPriceLabel.text = "$\(totalPrice)"
+            let priceFormat = String(format: "%.1f", carts[indexPath.row].getTotal())
+            cell.totalPriceLabel.text = "$\(priceFormat)"
             cell.cartRecord = carts[indexPath.row]
         }
         return cell

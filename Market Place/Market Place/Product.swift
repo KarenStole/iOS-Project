@@ -13,7 +13,7 @@ import ObjectMapper
 class Product: Hashable, Mappable {
     
     var name : String?
-    var price : Int?
+    var price : Double?
     var category : String?
     var image : String?
     var id : Int?
@@ -37,7 +37,7 @@ class Product: Hashable, Mappable {
         return name.hashValue
     }
     
-    init(name : String, price : Int, category : String, image : String) {
+    init(name : String, price : Double, category : String, image : String) {
         self.name = name
         self.price = price
         self.category = category

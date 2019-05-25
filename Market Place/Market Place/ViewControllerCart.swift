@@ -24,12 +24,14 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         if(!isRecordViewController){
-            totalPriceLabel.text = "$\(modelController.cart.getTotal())"
+            let priceFormat = String(format: "%.1f", modelController.cart.getTotal())
+            totalPriceLabel.text = "$\(priceFormat)"
             checkOutButon.isHidden = false
 
         }
         else{
-            totalPriceLabel.text = "$\(modelControllerRecord.cart.getTotal())"
+            let priceFormat = String(format: "%.1f", modelControllerRecord.cart.getTotal())
+            totalPriceLabel.text = "$\(priceFormat)"
             checkOutButon.isHidden = true
         }
         checkOutButon.layer.cornerRadius = 20

@@ -39,9 +39,9 @@ class Cart : Mappable{
     }
     
     //Getting the total price of the cart
-    func getTotal() -> Int {
+    func getTotal() -> Double {
         
-        var sum = 0
+        var sum : Double = 0
         let products = self.cart.filter { (arg0) -> Bool in
             let (cartItem) = arg0
             return cartItem.quantity != 0
@@ -49,7 +49,7 @@ class Cart : Mappable{
         for product in products{
             let price = product.product?.price
             let units = product.quantity
-            sum += (price!*units!)
+            sum += (price! * (Double(units!)))
         }
         return sum
     }

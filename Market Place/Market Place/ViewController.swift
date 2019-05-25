@@ -32,38 +32,6 @@ class ViewController: UIViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        ModelManager.getProductsFromApi(completionHandler: {result, error in
-            if let result = result{
-                    self.products = result
-                self.categories = ModelManager.getProductCategories(listOfProducts: self.products)
-                self.initCellButtonStatus()
-                self.modelController.cart = Cart.initCart()
-                self.tableView.reloadData()
-                }
-            if let error = error{
-                let alert = UIAlertController(title: "Something went wrong!", message: "Sorry, we're having some problems. Retry in some minutes", preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                
-                self.present(alert, animated: true)
-                print("LOG ERROR: Error loading products: \(error.localizedDescription)")
-            }
-            })
-        ModelManager.getPromotionsFromApi(completionHandler: {result, error in
-            if let result = result{
-                self.promotions = result
-                self.pageControl.numberOfPages = self.promotions.count
-                self.bannerCollectionView.reloadData()
-            }
-            if let error = error{
-                let alert = UIAlertController(title: "Something went wrong!", message: "Sorry, we're having some problems. Retry in some minutes", preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                
-                self.present(alert, animated: true)
-                print("LOG ERROR: Error loading promotions: \(error.localizedDescription)")
-            }
-        })
 
     }
     
@@ -72,6 +40,35 @@ class ViewController: UIViewController {
      Reload the tableView for new data
      */
     override func viewWillAppear(_ animated: Bool) {
+        ModelManager.getProductsFromApi(completionHandler: {result, error in
+            if let result = result{
+                self.products = result
+                self.categories = ModelManager.getProductCategories(listOfProducts: self.products)
+                if(self.buttonAddStatusFormCells.isEmpty){
+                    self.initCellButtonStatus()
+                }
+                self.tableView.reloadData()
+            }
+            if let error = error{
+                let alert = UIAlertController(title: "Something went wrong!", message: "Sorry, we're having some problems. Retry in some minutes", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                print("LOG ERROR: Error loading products: \(error.localizedDescription)")
+            }
+        })
+        ModelManager.getPromotionsFromApi(completionHandler: {result, error in
+            if let result = result{
+                self.promotions = result
+                self.pageControl.numberOfPages = self.promotions.count
+                self.bannerCollectionView.reloadData()
+            }
+            if let error = error{
+                let alert = UIAlertController(title: "Something went wrong!", message: "Sorry, we're having some problems. Retry in some minutes", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                print("LOG ERROR: Error loading promotions: \(error.localizedDescription)")
+            }
+        })
         cartButton.isUserInteractionEnabled =
             !modelController.emptyCart
         if(modelController.emptyCart){
@@ -172,6 +169,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellTableView", for: indexPath) as! TableViewCell
+        cell.selectionStyle = .none
         let product = ModelManager.getProductForCategory(caregoryIndex: indexPath.section, listOfProducts: products)
         //if im searching
         if(searchActive){
@@ -185,7 +183,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
                             cell.delegate = self
                             cell.product = prod
                             cell.productNameLaber.text = prod.name
-                            cell.productPriceLaber.text = "$\(prod.price ?? 0)"
+                            let priceFormat = String(format: "%.1f", prod.price!)
+                            cell.productPriceLaber.text = "$\(priceFormat)"
                             if let url = prod.image{
                                 cell.productPictureImageView.kf.setImage(with: URL(string:url))
                             }
@@ -209,7 +208,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
                     cell.delegate = self
                     cell.product = product[indexPath.row]
                     cell.productNameLaber.text = product[indexPath.row].name
-                    cell.productPriceLaber.text = "$\(product[indexPath.row].price ?? 0)"
+                    let priceFormat = String(format: "%.1f", product[indexPath.row].price!)
+                    cell.productPriceLaber.text = "$\(priceFormat)"
                     if let url = product[indexPath.row].image{
                         cell.productPictureImageView.kf.setImage(with: URL(string:url))
                     }
