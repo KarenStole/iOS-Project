@@ -24,22 +24,23 @@ class ViewController: UIViewController {
     var searchActive : Bool = false
     var buttonAddStatusFormCells: [[Product : Bool]] = []
     
-    /* Set the init values from the params:
-     categories : List the caregories in the Products.plist
-     products : List the products in the Products.plsit
-     promotions : List of all promotion in the Promotions.plist
-     pageControl : Set the number of pages
-     */
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
-    
+    /* Set the init values from the params:
+     categories : List the caregories
+     products : List the products from the API
+     promotions : List of all promotion from the API
+     pageControl : Set the number of pages
+     */
     /* Set the the status button from the cells (hidden or not hidden)
      Allows to click in the cartButton only if the cart isn't empty
      Reload the tableView for new data
      */
     override func viewWillAppear(_ animated: Bool) {
+        
+        //Getting the products
         ModelManager.getProductsFromApi(completionHandler: {result, error in
             if let result = result{
                 self.products = result
@@ -56,6 +57,8 @@ class ViewController: UIViewController {
                 print("LOG ERROR: Error loading products: \(error.localizedDescription)")
             }
         })
+        
+        //Getting the promotions
         ModelManager.getPromotionsFromApi(completionHandler: {result, error in
             if let result = result{
                 self.promotions = result
@@ -78,13 +81,6 @@ class ViewController: UIViewController {
         tableView.reloadData()
     }
     
-    /* Move from the ViewControllerCart if the cart have elements*/
-  /*  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destVC : ViewControllerCart = segue.destination as! ViewControllerCart
-        destVC.modelController = modelController
-        
-    }*/
-    
     /* Function that init buttonAddStatusFormCells (array (representing the section) of dictionary(representing the element per section [Product:Bool])) */
     func initCellButtonStatus(){
         buttonAddStatusFormCells.removeAll()
@@ -99,7 +95,7 @@ class ViewController: UIViewController {
     }
 
     
-    /* Swich to the checkOut viewController*/
+    /* Swich to the checkOut viewController or to the Record of purchases*/
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.destination is ViewControllerCart{
@@ -113,7 +109,6 @@ class ViewController: UIViewController {
 
     }
     @IBAction func goToCheckout(_ sender: Any) {
-
         performSegue(withIdentifier: "checkOutView", sender: self)
     }
 
@@ -216,7 +211,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
                     else {
                         cell.productPictureImageView.kf.setImage(with: URL(string: "https://static.thenounproject.com/png/340719-200.png"))
                     }
-
                     cell.showAddButton = status
                     cell.showPlusMinButton = !status
                     cell.numberOfProducts = numOfProduct

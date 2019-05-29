@@ -24,6 +24,7 @@ class ModelManager {
     var token: String = ""
 
     private init(){
+        //Getting the token only one time
         AuthenticationManager.shared.authenticate(onCompletion: {response in
             self.token = "Bearer \(response.token)"
         })
@@ -32,9 +33,8 @@ class ModelManager {
     //#############    FUNCTIONS TO MANAGE PROMOTIONS ###############################################
     //Function that get the images's references from Promotions.plist and parse it into an array of UIImage
     static func getPromotionsFromApi( completionHandler: @escaping ( [Promotions]?, Error?) -> Void) {
-        //acordarse de poner el metodo
-        print("\(ModelManager.url)/products")
-        Alamofire.request("\(ModelManager.url)/promoted").validate().responseArray { (  response: DataResponse<[Promotions]>) in
+        print("Request to: \(ModelManager.url)/products")
+        Alamofire.request("\(ModelManager.url)/promoted", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).validate().responseArray { (  response: DataResponse<[Promotions]>) in
             switch response.result {
             case .success:
                 completionHandler(response.value, nil)
@@ -64,9 +64,8 @@ class ModelManager {
     
     //Get all the products from Products.plist
     static func getProductsFromApi( completionHandler: @escaping ( [Product]?, Error?) -> Void) {
-        //acordarse de poner el metodo
-        print("\(ModelManager.url)/products")
-            Alamofire.request("\(ModelManager.url)/products").validate().responseArray { (  response: DataResponse<[Product]>) in
+        print("Request to: \(ModelManager.url)/products")
+            Alamofire.request("\(ModelManager.url)/products", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).validate().responseArray { (  response: DataResponse<[Product]>) in
             switch response.result {
             case .success:
                 completionHandler(response.value, nil)
@@ -109,18 +108,22 @@ class ModelManager {
     
     //#############    FUNCTIONS TO MANAGE THE CART #################################################
     
-    // Update the quantity of a product in the cart
+    // Update the quantity of a product in the cart, if the product isn't in the cart, create a new CartItem
     func addProductIntoTheCart(product : Product, cart : Cart) {
         let item = CartItem()
+        //Check if in the cart is a item with the current product
         let itemCart = self.cart.cart.filter { (arg0) -> Bool in
             let (cartItem) = arg0
             return cartItem.product == product
         }
+        //If there isn't a item with the product, add ir to the cart
         if(itemCart.isEmpty){
             item.product = product
             item.quantity = 1
             cart.cart.append(item)
-        }else{
+        }
+        //Otherwise just add one to the quantity
+        else{
             if let quantity = itemCart.first?.quantity{
                 itemCart.first?.quantity = (quantity + 1)
             }
@@ -138,15 +141,13 @@ class ModelManager {
         if(!itemCart.isEmpty){
             if let quantity = itemCart.first?.quantity{
                 itemCart.first?.quantity = (quantity - 1)
+                //If the quantity is equal before the subtraction, just delete it into the cart
                 if(quantity == 1){
                     if let index = cart.cart.index(of: itemCart.first!) {
                         cart.cart.remove(at: index)
                     }
                 }
             }
-
-            
-            
         }
         
     }
@@ -161,6 +162,7 @@ class ModelManager {
         }
     }
     
+    //Making the chack out
     static func postCheckOut( token: String, cart: Cart, completionHandler: @escaping ( String?, Error?) -> Void) {
         let headers: HTTPHeaders = [
             "Authorization": token
@@ -168,22 +170,13 @@ class ModelManager {
         var parameters: [String: [[String:Int]]] = [
             "cart": []
         ]
+        //Preparing the Json
         for item in cart.cart{
             if(item.quantity != 0){
-                parameters["cart"]!.append(["product_id": item.product!.id!, "quantity": item.quantity!])
+                parameters["cart"]!.append(["product_id": item.product.id!, "quantity": item.quantity])
             }
             
         }
-        var jsonString: String
-        do{
-            let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            jsonString = String(data: jsonData, encoding: String.Encoding.ascii)!
-            print (jsonString)
-        }catch{}
-
-        
-        print(headers)
-        //acordarse de poner el metodo
         print("\(ModelManager.url)/checkout")
         Alamofire.request("\(ModelManager.url)/checkout", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate(statusCode: 200..<500).responseString(completionHandler: {response in
             switch response.result {

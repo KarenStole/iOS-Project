@@ -61,6 +61,7 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     //######## Checkout's button action, empty the cart ando go back to the previous view controller ###########################
     @IBAction func checkOut(_ sender: Any) {
         
+        //Making the checkout
         ModelManager.postCheckOut(token: self.modelController.token, cart: self.modelController.cart, completionHandler: { response, error in
             if let response = response{
                 let alert = UIAlertController(title: "Checkout", message: response, preferredStyle: .alert)
@@ -77,10 +78,9 @@ class ViewControllerCart: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             }
             if let error = error{
                     let alert = UIAlertController(title: "Something went wrong!", message: "An error has occurred making the purchase. Retry in some minutes", preferredStyle: .alert)
-                    
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                    
                     self.present(alert, animated: true)
+                
                     print("LOG ERROR: Error making the purchase: \(error.localizedDescription)")
                 }
             }
@@ -120,19 +120,19 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
         
         if ( cartItem.quantity != 0){
             cell.product = cartItem.product
-            if let image = cartItem.product!.image{
+            if let image = cartItem.product.image{
                 cell.productImageView.kf.setImage(with: URL(string: image))
             }
             else {
                 cell.productImageView.kf.setImage(with: URL(string: "https://static.thenounproject.com/png/340719-200.png"))
-                
             }
-            cell.productPriceLebel.text = "$\(cartItem.product!.price ?? 0)"
-            cell.productNameLabel.text = cartItem.product!.name
-            cell.productUnitLabel.text = "\(cartItem.quantity ?? 0) unit"
+            let priceFormat = String(format: "%.1f", cartItem.product.price!)
+            cell.productPriceLebel.text = "$\(priceFormat)"
+            cell.productNameLabel.text = cartItem.product.name
+            cell.productUnitLabel.text = "\(cartItem.quantity ) unit"
             
         }
-        
+
         return cell
     }
     
@@ -161,8 +161,8 @@ extension ViewControllerCart : UICollectionViewDelegate, UICollectionViewDataSou
                     return (cartItem.product == product)
                 }
                 if let first = quantity.first{
-                pickerView.selectRow((first.quantity)! - 1, inComponent: 0, animated: true)
-                typeValue = (first.quantity)!
+                    pickerView.selectRow((first.quantity) - 1, inComponent: 0, animated: true)
+                    typeValue = (first.quantity)
             }
             }
             let doneAction = UIAlertAction(title: "Done", style: UIAlertAction.Style.default) {

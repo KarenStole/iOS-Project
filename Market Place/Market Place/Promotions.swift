@@ -24,14 +24,14 @@ class Promotions: Mappable {
         self.mapping(map: map)
     }
     
-    func mapping(map: Map) {
-        label1 <- map["name"]
-        label2 <- map["description"]
-        image <- map["photoUrl"]
-    }
     init(label1 : String, label2: String, image : String) {
         self.image = image
         self.label1 = label2
         self.label2 = label1
+    }
+    func mapping(map: Map) {
+        label1 <- map["name"]
+        label2 <- map["description"]
+        image <- map["photoUrl"]
     }
 }

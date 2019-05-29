@@ -47,9 +47,9 @@ class Cart : Mappable{
             return cartItem.quantity != 0
         }
         for product in products{
-            let price = product.product?.price
+            let price = product.product.price
             let units = product.quantity
-            sum += (price! * (Double(units!)))
+            sum += (price! * (Double(units)))
         }
         return sum
     }
@@ -60,7 +60,7 @@ class Cart : Mappable{
                 return cartItem.product == product
             }
         if let first = cartItem.first {
-            return first.quantity!
+            return first.quantity
         }else{
             return 0
         }

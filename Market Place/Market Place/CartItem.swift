@@ -11,12 +11,11 @@ import  ObjectMapper
 
 class CartItem: Mappable, Equatable {
     
-    var product : Product?
-    var quantity : Int?
+    var product = Product()
+    var quantity = Int()
     
     init() {
     }
-    
     required convenience init?(map: Map) {
         self.init()
         

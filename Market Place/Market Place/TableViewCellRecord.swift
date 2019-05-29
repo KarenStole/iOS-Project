@@ -12,13 +12,13 @@ protocol DetailTableViewCellDelegate {
     func goToDetail(cell: TableViewCellRecord) -> Void}
 
 class TableViewCellRecord: UITableViewCell {
-
+    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
+    @IBOutlet weak var detailButton: UIButton!
+    
     var cartRecord = Cart()
     var delegate : DetailTableViewCellDelegate?
-    
-    @IBOutlet weak var detailButton: UIButton!
     
     override func layoutSubviews() {
         super.layoutSubviews()
